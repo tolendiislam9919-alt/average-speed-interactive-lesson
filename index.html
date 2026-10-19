@@ -1,0 +1,1202 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ХБЖ және орташа жылдамдық · 7 сынып</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=PT+Mono&display=swap">
+<style>
+/* Layout: 1600×900 тұрақты сахна экранға масштабталады; инженерлік сызба қағазы (көк тор), сия-көк мәтін, қызғылт сары екпін */
+:root{
+  --paper:#f3f5f7; --grid:rgba(36,82,163,.07); --grid2:rgba(36,82,163,.13);
+  --ink:#1d2b45; --muted:#5f6b7f; --line:#cdd5e0; --card:#ffffff;
+  --blue:#2452a3; --sky:#4a9fd8; --orange:#e8731a; --violet:#5b3fa0;
+  --red:#c8352b; --green:#2c8a4f; --amber:#d99a16;
+  --sans:"PT Sans","Segoe UI",Arial,sans-serif; --serif:"PT Serif",Georgia,serif; --mono:"PT Mono",Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#0f1726;overflow:hidden}
+body{font-family:var(--sans);color:var(--ink)}
+button{font:inherit;cursor:pointer;color:inherit}
+input,select{font:inherit;color:var(--ink)}
+[hidden]{display:none!important}
+
+#stage{position:absolute;left:50%;top:50%;width:1600px;height:900px;transform-origin:center center;background:var(--paper);
+  background-image:linear-gradient(var(--grid2) 1px,transparent 1px),linear-gradient(90deg,var(--grid2) 1px,transparent 1px),
+  linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px;overflow:hidden}
+.slide{position:absolute;left:0;top:0;width:1600px;height:844px;padding:42px 64px 20px;display:none}
+.slide.on{display:block;animation:slideIn .45s ease-out}
+@keyframes slideIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+h1,h2{margin:0;font-family:var(--sans);font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+h2{font-size:50px;line-height:1.1;margin-bottom:22px}
+h2 small{font-size:28px;color:var(--muted);font-weight:400;margin-left:10px}
+.lead{font-size:26px;color:var(--muted);margin:0 0 20px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:20px 24px;box-shadow:0 10px 28px -20px rgba(20,35,70,.45)}
+.box-warn{border-color:#e7a29b;background:#fff7f6}
+.box-warn b.t{color:var(--red)}
+.box-info{border-color:#a9c3ea;background:#f5f9ff}
+.box-ok{border-color:#9fd3b2;background:#f3fbf6}
+.mono{font-family:var(--mono)}
+.big{font-size:30px}
+.btn{border:2px solid var(--ink);background:#fff;border-radius:10px;padding:10px 20px;font-weight:700;font-size:22px}
+.btn:hover{background:#eef3fb}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.org{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.sm{font-size:18px;padding:6px 14px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+sub,sup{font-size:.62em}
+
+/* қиындық шкаласы */
+.meter{position:absolute;right:48px;bottom:22px;display:flex;align-items:center;gap:10px;font-size:18px;color:var(--muted);background:rgba(255,255,255,.85);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px}
+.meter i{display:block;width:30px;height:14px;border-radius:3px;background:#e2e6ec}
+.meter i.f1{background:#3aa65a}.meter i.f2{background:#9cc63b}.meter i.f3{background:#e9c235}.meter i.f4{background:#ef8a2b}.meter i.f5{background:#d9432f}
+
+/* навигация */
+#bar{position:absolute;left:0;right:0;bottom:0;height:56px;display:flex;align-items:center;gap:10px;padding:0 20px;background:#1d2b45;color:#e9eef7;z-index:50}
+#bar button{background:transparent;border:1.5px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:6px 14px;font-size:18px;font-weight:700}
+#bar button:hover{background:rgba(255,255,255,.12)}
+#bar button.on{background:var(--orange);border-color:var(--orange)}
+#bar .num{font-family:var(--mono);font-size:18px;min-width:84px;text-align:center}
+#bar .ttl{flex:1;font-size:17px;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#bar .dots{display:flex;gap:5px}
+#bar .dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
+#bar .dots span.on{background:var(--orange)}
+.pens{display:flex;gap:6px;align-items:center}
+.pens .c{width:24px;height:24px;border-radius:50%;border:2px solid #fff;padding:0!important}
+#ink{position:absolute;left:0;top:0;width:1600px;height:844px;z-index:40;touch-action:none;display:none}
+#ink.on{display:block;cursor:crosshair}
+
+/* 1 титул */
+.title-wrap{display:grid;grid-template-columns:1fr;gap:0}
+.s-title h1{font-size:74px;line-height:1.05;margin-top:20px}
+.s-title .sub{font-size:30px;color:var(--muted);margin-top:14px}
+.s-title .tag{position:absolute;left:64px;bottom:40px;font-size:22px;border:2px solid var(--ink);border-radius:999px;padding:8px 22px;background:#fff}
+#heroSvg{position:absolute;left:60px;top:300px}
+
+/* 2 қатені тап */
+.err-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.err{position:relative;height:270px;cursor:pointer}
+.err .wrong{font-family:var(--serif);font-style:italic;font-size:42px;color:var(--red);text-align:center;margin-top:18px;position:relative;display:inline-block;left:50%;transform:translateX(-50%);white-space:nowrap}
+.err .wrong svg{position:absolute;left:-10px;top:-6px;overflow:visible}
+.err .wrong line{stroke:var(--red);stroke-width:5;stroke-dasharray:900;stroke-dashoffset:900;transition:stroke-dashoffset .7s ease}
+.err.open .wrong line{stroke-dashoffset:0}
+.err .right{position:absolute;left:24px;right:24px;bottom:22px;font-size:25px;padding:14px 18px;border-radius:10px;background:#eaf7ef;border:2px solid #8fcfa8;opacity:0;transform:translateY(20px);transition:all .5s .45s}
+.err.open .right{opacity:1;transform:none}
+.err .hintc{position:absolute;bottom:26px;left:0;right:0;text-align:center;color:var(--muted);font-size:20px}
+.err.open .hintc{display:none}
+
+/* 3 уақыт */
+.gear{transform-box:fill-box;transform-origin:center}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinr{to{transform:rotate(-360deg)}}
+.arrow-pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.conv{display:flex;align-items:center;gap:14px;font-size:30px;flex-wrap:wrap}
+.conv input{width:140px;font-size:30px;padding:6px 10px;border:2px solid var(--blue);border-radius:8px;text-align:center;font-family:var(--mono)}
+.conv .out{font-family:var(--mono);font-weight:700;color:var(--blue)}
+
+/* 5 жылдамдық */
+.flow-chip{font-family:var(--mono);font-weight:700}
+
+/* 7 алгоритм */
+.algo{display:grid;gap:22px;width:820px;margin-left:330px}
+.algo .st{opacity:.12;transform:scale(.97);transition:all .6s}
+.algo .st.on{opacity:1;transform:none}
+.algo .st h3{margin:0 0 6px;font-size:26px}
+.algo .st p{margin:0;font-size:28px}
+.algo .arrow{height:26px;text-align:center;font-size:30px;color:var(--orange);line-height:26px}
+.o{color:var(--orange);font-weight:700}.b{color:var(--sky);font-weight:700}.v{color:var(--violet);font-weight:700}
+
+/* 8 тұзақ */
+.trap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+
+/* тұзақ сызығы */
+.slide.on .xl{animation:drawx .6s 1s forwards}.slide.on .xl.x2{animation-delay:1.5s}
+@keyframes drawx{to{stroke-dashoffset:0}}
+/* 10 1/3 */
+.steps10 li{font-size:30px;margin:10px 0;opacity:0;transform:translateX(-14px);transition:all .45s}
+.steps10 li.on{opacity:1;transform:none}
+
+/* 11 синтез */
+.syn{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.syn .card{padding:0;overflow:hidden;opacity:0;transform:translateY(18px)}
+.slide.on .syn .card{animation:up .6s forwards}
+.slide.on .syn .card:nth-child(2){animation-delay:.25s}.slide.on .syn .card:nth-child(3){animation-delay:.5s}.slide.on .syn .card:nth-child(4){animation-delay:.75s}
+@keyframes up{to{opacity:1;transform:none}}
+.syn h3{margin:0;padding:12px 20px;color:#fff;font-size:30px}
+.syn div.r{padding:10px 20px;font-size:28px;border-top:1.5px solid var(--line);text-align:center}
+
+/* 12 дуэль */
+.duel-top{display:flex;align-items:center;gap:16px;margin-bottom:12px}
+.duel-top h2{margin:0;font-size:40px;flex:1}
+.duel-top .pair{font-size:26px;font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:6px 16px}
+.duel{display:grid;grid-template-columns:1fr 1fr;gap:0;height:700px;border:3px solid var(--ink);border-radius:16px;overflow:hidden;background:#fff}
+.side{position:relative;padding:16px 22px;display:flex;flex-direction:column;gap:12px;touch-action:none;user-select:none;-webkit-user-select:none}
+.side+.side{border-left:4px dashed var(--ink)}
+.side.L{background:#f4f8ff}.side.R{background:#fff8f1}
+.side .who{display:flex;align-items:center;gap:12px}
+.side .who input{flex:1;font-size:26px;font-weight:700;border:0;border-bottom:2px solid var(--line);background:transparent;padding:4px 2px}
+.side .sc{font-family:var(--mono);font-size:30px;font-weight:700}
+.side.L .sc{color:var(--blue)}.side.R .sc{color:var(--orange)}
+.side .prog{display:flex;gap:6px}
+.side .prog i{flex:1;height:10px;border-radius:5px;background:#dfe4ec}
+.side .prog i.ok{background:var(--green)}.side .prog i.bad{background:var(--red)}.side .prog i.cur{background:var(--ink)}
+.side .q{font-size:36px;font-weight:700;min-height:110px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.25;padding:6px}
+.side .kind{font-size:18px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);text-align:center}
+.side .opts{display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1}
+.side .opt{border:3px solid var(--line);background:#fff;border-radius:14px;font-size:34px;font-weight:700;font-family:var(--mono);touch-action:manipulation}
+.side .opt.ok{background:#dff3e6;border-color:var(--green);color:var(--green)}
+.side .opt.bad{background:#fbe3e0;border-color:var(--red);color:var(--red)}
+.side .opt.show{border-color:var(--green)}
+.side canvas.wr{flex:1;width:100%;background:#fff;border:2px solid var(--line);border-radius:12px;touch-action:none}
+.side .wbtns{display:flex;gap:10px;justify-content:center}
+.side .ansbox{font-size:28px;text-align:center;padding:10px;border-radius:10px;background:#eaf7ef;border:2px solid #8fcfa8}
+.side .done{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:rgba(255,255,255,.92);font-size:40px;font-weight:700}
+.side .done .s{font-size:90px;font-family:var(--mono)}
+.duel-over{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:760px;z-index:30;text-align:center}
+.duel-over h3{font-size:40px;margin:0 0 10px}
+.duel-over table{width:100%;border-collapse:collapse;font-size:24px;margin:10px 0}
+.duel-over td,.duel-over th{border-bottom:1.5px solid var(--line);padding:6px}
+.big-ok{font-size:44px;padding:10px 26px}
+.mark-pair{display:flex;gap:16px;justify-content:center}
+
+/* деңгейлік */
+.lv-top{display:flex;align-items:center;gap:20px;margin-bottom:16px}
+.lv-top h2{margin:0;flex:1;font-size:44px}
+.lv-top .stu{font-size:22px;display:flex;align-items:center;gap:8px}
+.lv-top select{font-size:22px;padding:6px 10px;border:2px solid var(--ink);border-radius:8px;background:#fff}
+.lv-top .pts{font-size:24px;font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:6px 16px}
+.tasks{display:grid;gap:18px}
+.tasks.g2{grid-template-columns:1fr 1fr}
+.task{font-size:27px}
+.task .tq{margin-bottom:12px;line-height:1.3}
+.task .tq b{color:var(--blue)}
+.task .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+.ans{width:150px;font-size:27px;padding:6px 10px;border:2px solid var(--line);border-radius:8px;text-align:center;font-family:var(--mono);background:#fff}
+.ans.ok{border-color:var(--green);background:#e6f6ec}
+.ans.bad{border-color:var(--red);background:#fdecea}
+.ans:disabled{color:var(--ink)}
+.fb{font-size:19px;min-height:24px}
+.fb.ok{color:var(--green)}.fb.bad{color:var(--red)}
+.hint{font-size:20px;color:var(--violet);font-style:italic}
+
+/* мензурка */
+.fl{display:grid;grid-template-columns:600px 1fr;gap:30px}
+.fl .qs .row{font-size:25px}
+.fl .qs .ans{width:140px;font-size:25px}
+
+/* нәтиже */
+.res{width:100%;border-collapse:collapse;font-size:22px;background:#fff}
+.res th,.res td{border:1.5px solid var(--line);padding:5px 10px;text-align:center}
+.res th{background:#e9eff8}
+.res td:first-child{text-align:left}
+.scale{display:grid;gap:10px}
+.scale div{display:flex;align-items:center;gap:14px;font-size:24px}
+.scale i{display:block;width:70px;height:40px;border-radius:6px}
+.keyt{font-size:21px;border-collapse:collapse;width:100%;background:#fff}
+.keyt td{border-bottom:1px solid var(--line);padding:4px 8px}
+
+/* модаль */
+#modal{position:absolute;inset:0;background:rgba(15,23,38,.55);z-index:80;display:flex;align-items:center;justify-content:center}
+#modal .card{width:760px}
+#modal textarea{width:100%;height:340px;font-size:22px;font-family:var(--sans);padding:10px;border:2px solid var(--line);border-radius:8px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- 1. Титул -->
+<section class="slide s-title" data-title="ХБЖ және орташа жылдамдық" data-lv="1">
+  <div style="font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Физика · 7 сынып · практикалық сабақ</div>
+  <h1>ХБЖ және орташа жылдамдық</h1>
+  <div class="sub">Ең жиі жіберілетін 5 қатені түзетеміз және оңайдан қиынға қарай үйренеміз.</div>
+  <svg id="heroSvg" width="1480" height="440" viewBox="0 0 1480 440">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4a9fd8"/></marker>
+      <marker id="aho" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#e8731a"/></marker></defs>
+    <!-- көлем: куб -->
+    <g transform="translate(110,60)">
+      <g id="heroCube"></g>
+      <text x="120" y="330" text-anchor="middle" font-size="34" font-weight="700" fill="#2452a3">Көлем</text>
+      <text x="120" y="362" text-anchor="middle" font-size="22" fill="#5f6b7f">л · см³ · м³</text>
+    </g>
+    <path d="M 380 190 C 450 110, 520 110, 580 170" stroke="#4a9fd8" stroke-width="3" fill="none" stroke-dasharray="10 8" marker-end="url(#ah)"><animate attributeName="stroke-dashoffset" from="36" to="0" dur="1s" repeatCount="indefinite"/></path>
+    <!-- жылдамдық: спидометр -->
+    <g transform="translate(740,210)">
+      <circle r="150" fill="#fff" stroke="#1d2b45" stroke-width="6"/>
+      <path d="M -120 70 A 140 140 0 1 1 120 70" fill="none" stroke="#e8731a" stroke-width="14" stroke-linecap="round" opacity=".85"/>
+      <g id="ticks"></g>
+      <g id="needle"><line x1="0" y1="0" x2="0" y2="-118" stroke="#c8352b" stroke-width="7" stroke-linecap="round"/></g>
+      <circle r="14" fill="#1d2b45"/>
+      <text id="spdTxt" y="74" text-anchor="middle" font-size="34" font-family="PT Mono,monospace" font-weight="700" fill="#1d2b45">72 км/сағ</text>
+      <text id="spdTxt2" y="108" text-anchor="middle" font-size="26" font-family="PT Mono,monospace" fill="#e8731a">= 20 м/с</text>
+      <text y="210" text-anchor="middle" font-size="34" font-weight="700" fill="#e8731a">Жылдамдық</text>
+    </g>
+    <path d="M 900 170 C 960 110, 1030 110, 1090 170" stroke="#e8731a" stroke-width="3" fill="none" stroke-dasharray="10 8" marker-end="url(#aho)"><animate attributeName="stroke-dashoffset" from="36" to="0" dur="1s" repeatCount="indefinite"/></path>
+    <!-- уақыт: секундомер -->
+    <g transform="translate(1250,210)">
+      <rect x="-26" y="-178" width="52" height="30" rx="8" fill="#1d2b45"/>
+      <circle r="140" fill="#fff" stroke="#1d2b45" stroke-width="6"/>
+      <rect x="-112" y="-38" width="224" height="76" rx="12" fill="#eef3fb" stroke="#2452a3" stroke-width="3"/>
+      <text id="clk" y="18" text-anchor="middle" font-size="46" font-family="PT Mono,monospace" font-weight="700" fill="#2452a3">00:00:00</text>
+      <text y="210" text-anchor="middle" font-size="34" font-weight="700" fill="#2452a3">Уақыт</text>
+    </g>
+  </svg>
+  <div class="tag">Зерттеушінің тренажер-конспектісі</div>
+</section>
+
+<!-- 2. Ой қозғау -->
+<section class="slide" data-title="Ой қозғау: Қатені тап!" data-lv="1">
+  <h2>Ой қозғау: Қатені тап! <small>жүйедегі 4 қате</small></h2>
+  <div class="err-grid" id="errGrid">
+    <div class="card err"><div class="wrong">54 км/сағ = 54 · 3,6 = 194,4 м/с<svg width="640" height="60"><line x1="0" y1="44" x2="640" y2="6"/></svg></div>
+      <div class="right"><b>Дұрысы:</b> 3,6-ға <b>бөлу</b> керек: 54 : 3,6 = 15 м/с. м/с-тағы сан әрқашан кіші!</div><div class="hintc">Басып, қатені аш</div></div>
+    <div class="card err"><div class="wrong">1,5 сағ = 1 сағ 50 мин<svg width="470" height="60"><line x1="0" y1="44" x2="470" y2="6"/></svg></div>
+      <div class="right"><b>Дұрысы:</b> 0,5 сағ — сағаттың жартысы, яғни 30 мин. 1,5 сағ = 1 сағ 30 мин = 90 мин.</div><div class="hintc">Басып, қатені аш</div></div>
+    <div class="card err"><div class="wrong">2 л = 200 см³<svg width="290" height="60"><line x1="0" y1="44" x2="290" y2="6"/></svg></div>
+      <div class="right"><b>Дұрысы:</b> 1 л = 1000 см³, демек 2 л = 2000 см³.</div><div class="hintc">Басып, қатені аш</div></div>
+    <div class="card err"><div class="wrong">v<sub>орт</sub> = (3 + 7) : 2 = 5 км/сағ<svg width="520" height="60"><line x1="0" y1="44" x2="520" y2="6"/></svg></div>
+      <div class="right"><b>Дұрысы:</b> орташа жылдамдық арифметикалық ортаға тең емес! Жауабы 4,2 км/сағ.</div><div class="hintc">Басып, қатені аш</div></div>
+  </div>
+</section>
+
+<!-- 3. Уақыт -->
+<section class="slide" data-title="1-қадам. Уақыт" data-lv="1">
+  <h2>1-қадам. Уақыт: сағ ⇄ мин ⇄ с</h2>
+  <div class="card box-info" style="font-size:26px;width:960px">Ұлы бірліктен кішісіне өткенде сан <b>өседі</b> (көбейтеміз). Кішіден ұлыға өткенде сан <b>кемиді</b> (бөлеміз). ХБЖ бірлігі — <b>секунд (с)</b>.</div>
+  <svg width="1000" height="460" viewBox="0 0 1000 460" style="position:absolute;left:40px;top:250px">
+    <defs><marker id="ab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#2452a3"/></marker></defs>
+    <path class="arrow-pulse" d="M 180 140 C 380 -10, 700 -10, 850 175" stroke="#2452a3" stroke-width="5" fill="none" marker-end="url(#ab)"/>
+    <text x="520" y="45" text-anchor="middle" font-size="36" font-weight="700" fill="#2452a3">× 3600</text>
+    <path d="M 290 210 C 340 150, 420 150, 470 210" stroke="#2452a3" stroke-width="5" fill="none" marker-end="url(#ab)"/>
+    <text x="380" y="160" text-anchor="middle" font-size="32" font-weight="700" fill="#2452a3">× 60</text>
+    <path d="M 640 210 C 690 150, 760 150, 800 210" stroke="#2452a3" stroke-width="5" fill="none" marker-end="url(#ab)"/>
+    <text x="720" y="160" text-anchor="middle" font-size="32" font-weight="700" fill="#2452a3">× 60</text>
+    <path d="M 470 390 C 420 450, 340 450, 290 390" stroke="#c8352b" stroke-width="5" fill="none" marker-end="url(#ab)" style="stroke:#c8352b"/>
+    <text x="380" y="455" text-anchor="middle" font-size="32" font-weight="700" fill="#c8352b">: 60</text>
+    <path d="M 800 380 C 760 440, 690 440, 640 390" stroke="#c8352b" stroke-width="5" fill="none" marker-end="url(#ab)"/>
+    <text x="720" y="455" text-anchor="middle" font-size="32" font-weight="700" fill="#c8352b">: 60</text>
+    <g transform="translate(175,300)"><g class="gear" id="g1"></g><circle r="78" fill="#fff" stroke="#2452a3" stroke-width="4"/><text y="12" text-anchor="middle" font-size="36" font-weight="700">Сағат</text></g>
+    <g transform="translate(555,300)"><g class="gear" id="g2"></g><circle r="62" fill="#fff" stroke="#2452a3" stroke-width="4"/><text y="10" text-anchor="middle" font-size="30" font-weight="700">Минут</text></g>
+    <g transform="translate(860,300)"><g class="gear" id="g3"></g><circle r="46" fill="#fff" stroke="#2452a3" stroke-width="4"/><text y="8" text-anchor="middle" font-size="24" font-weight="700">Секунд</text></g>
+  </svg>
+  <div class="card box-warn" style="position:absolute;right:64px;top:150px;width:470px;font-size:25px">
+    <b class="t" style="font-size:28px">⚠ Ондық бөлшек тұзағы!</b>
+    <div style="margin-top:8px">• 0,5 сағ = 30 мин (50 мин емес)</div><div>• 0,25 сағ = 15 мин</div><div>• 1,5 сағ = 90 мин = 5400 с</div>
+  </div>
+  <div class="card" style="position:absolute;right:64px;top:430px;width:470px">
+    <div style="font-size:22px;color:var(--muted);margin-bottom:8px">Өзің тексер: сағатты жаз</div>
+    <div class="conv"><input id="hIn" value="1,5" aria-label="сағат"><span>сағ</span></div>
+    <div class="conv" style="margin-top:10px">= <span class="out" id="hMin">90</span> мин</div>
+    <div class="conv">= <span class="out" id="hSec">5400</span> с</div>
+  </div>
+</section>
+
+<!-- 4. Көлем -->
+<section class="slide" data-title="2-қадам. Көлем" data-lv="2">
+  <h2>2-қадам. Көлем: л ⇄ см³ ⇄ м³</h2>
+  <div class="card box-info" style="font-size:25px;width:1160px"><b>Концепт:</b> көлемде өлшем <b>үш рет</b> көбейтіледі (ұзындық × ені × биіктік). Сондықтан 10 емес — 10 · 10 · 10 = <b>1000</b>!</div>
+  <canvas id="cubeCv" width="760" height="560" style="position:absolute;left:40px;top:250px"></canvas>
+  <div style="position:absolute;left:820px;top:270px;width:720px;display:grid;gap:18px">
+    <div class="card" style="font-size:32px;text-align:center">Кубиктер: <b class="mono" id="cubeN" style="color:var(--blue)">0</b> см³<div id="cubeL" style="font-size:28px;color:var(--orange);font-weight:700;min-height:40px"></div></div>
+    <div class="card box-info" style="font-size:28px;line-height:1.55">
+      <b>1 л = 1 дм³ = 1000 см³</b><br>1 мл = 1 см³<br>1 см³ = 1000 мм³<br>1 м³ = 1000 л
+    </div>
+    <div class="card" style="font-size:24px"><b>Жылдам конвертер</b><br>Литр → см³: <b>× 1000</b> (2,5 л = 2500 см³)<br>Литр → м³: <b>: 1000</b> (2,5 л = 0,0025 м³)</div>
+    <button class="btn sm" id="cubeAgain" style="justify-self:start">↻ Кубты қайта толтыру</button>
+  </div>
+</section>
+
+<!-- 5. Жылдамдық -->
+<section class="slide" data-title="3-қадам. Жылдамдық" data-lv="3">
+  <h2>3-қадам. Жылдамдық: км/сағ ⇄ м/с</h2>
+  <svg width="1480" height="420" viewBox="0 0 1480 420" style="position:absolute;left:60px;top:170px">
+    <path d="M 860 150 L 1300 150" stroke="#e8731a" stroke-width="40" stroke-linecap="round" opacity=".18"/>
+    <path d="M 620 270 L 180 270" stroke="#e8731a" stroke-width="40" stroke-linecap="round" opacity=".18"/>
+    <polygon points="1300,118 1360,150 1300,182" fill="#e8731a"/>
+    <polygon points="180,238 120,270 180,302" fill="#e8731a"/>
+    <text x="1080" y="110" text-anchor="middle" font-size="34" font-weight="700" fill="#1d2b45">км/сағ → м/с</text>
+    <text x="1080" y="215" text-anchor="middle" font-size="32" font-weight="700" fill="#e8731a">3,6-ға БӨЛЕМІЗ</text>
+    <text x="400" y="230" text-anchor="middle" font-size="32" font-weight="700" fill="#e8731a">3,6-ға КӨБЕЙТЕМІЗ</text>
+    <text x="400" y="335" text-anchor="middle" font-size="34" font-weight="700" fill="#1d2b45">м/с → км/сағ</text>
+    <g transform="translate(740,210)">
+      <circle r="120" fill="#fff" stroke="#e8731a" stroke-width="12"/>
+      <circle r="96" fill="none" stroke="#1d2b45" stroke-width="3" stroke-dasharray="4 10"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="12s" repeatCount="indefinite"/></circle>
+      <text y="26" text-anchor="middle" font-size="78" font-weight="700" fill="#1d2b45">3,6</text>
+    </g>
+    <g id="chipR"><rect x="-80" y="-26" width="160" height="52" rx="26" fill="#fff" stroke="#e8731a" stroke-width="3"/><text id="chipRt" y="11" text-anchor="middle" font-size="28" font-family="PT Mono,monospace" font-weight="700" fill="#1d2b45">72 км/сағ</text></g>
+    <g id="chipL"><rect x="-80" y="-26" width="160" height="52" rx="26" fill="#fff" stroke="#2452a3" stroke-width="3"/><text id="chipLt" y="11" text-anchor="middle" font-size="28" font-family="PT Mono,monospace" font-weight="700" fill="#1d2b45">5 м/с</text></g>
+  </svg>
+  <div class="card" style="position:absolute;right:64px;top:120px;width:360px;font-size:24px"><b>Неге 3,6?</b><br>1 км = 1000 м<br>1 сағ = 3600 с<br>1000 м : 3600 с = 1 : 3,6</div>
+  <div class="card" style="position:absolute;left:64px;top:610px;width:620px">
+    <div style="font-size:22px;color:var(--muted);margin-bottom:6px">Өзің тексер (кез келгенін жаз)</div>
+    <div class="conv"><input id="kIn" value="72" aria-label="км/сағ"> км/сағ = <input id="mIn" value="20" aria-label="м/с"> м/с</div>
+  </div>
+  <div class="card box-ok" style="position:absolute;left:740px;top:610px;width:700px;font-size:25px"><b>Сенімді тексеру:</b> бір жылдамдықты ХБЖ-ға келтіргенде <b>м/с</b>-тағы сан әрқашан <b>КІШІ</b>, ал <b>км/сағ</b>-тағы сан <b>ҮЛКЕН</b> болады.</div>
+</section>
+
+<!-- 6. Матрица -->
+<section class="slide" data-title="Жылдамдық матрицасы" data-lv="3">
+  <h2>Жылдамдық матрицасы: эталондық мәндер</h2>
+  <canvas id="laneCv" width="1470" height="440"></canvas>
+  <div class="card" style="position:absolute;left:64px;top:640px;width:1100px;font-size:25px;border-color:#f0b27a;background:#fff8f1">
+    <b>Олимпиадалық есеп:</b> «Пойыз <span class="o">25 м/с</span>, автомобиль <span class="o">72 км/сағ</span>. Қайсысы жылдам?»<br>
+    <b>Матрицаға қара:</b> <span class="o">72 км/сағ = 20 м/с</span>. Пойыз (25 м/с) автомобильден (20 м/с) жылдамырақ.</div>
+</section>
+
+<!-- 7. Алгоритм -->
+<section class="slide" data-title="4-қадам. ХБЖ алгоритмі" data-lv="3">
+  <h2>4-қадам. Есептерді ХБЖ-да шығару алгоритмі</h2>
+  <div class="card" style="font-size:27px;margin-bottom:22px"><b>Есеп:</b> 54 км/сағ жылдамдықпен қозғалған автомобиль 1200 м жолды қанша уақытта жүреді?</div>
+  <div class="algo" id="algo">
+    <div class="card st"><h3>1. Берілгені</h3><p>v = <span class="o">54 км/сағ</span>,  s = <span class="b">1200 м</span>. Уақытты (t) табу керек.</p></div>
+    <div class="arrow">▼</div>
+    <div class="card st box-warn"><h3>2. ХБЖ-сүзгісі (міндетті қадам!)</h3><p>v = <span class="o">54 : 3,6 = 15 м/с</span>  ·  s = <span class="b">1200 м</span> (дайын)</p><p style="font-size:21px;color:var(--muted)">км/сағ-ты тікелей формулаға қоюға болмайды</p></div>
+    <div class="arrow">▼</div>
+    <div class="card st box-ok"><h3>3. Формула және есептеу</h3><p>t = s / v = <span class="b">1200</span> / <span class="o">15</span> = <b>80 с</b></p></div>
+  </div>
+  <button class="btn sm" id="algoAgain" style="position:absolute;left:64px;bottom:40px">↻ Қайта көрсету</button>
+</section>
+
+<!-- 8. Тұзақ -->
+<section class="slide" data-title="5-қадам. Орташа жылдамдық тұзағы" data-lv="4">
+  <h2>5-қадам. «Орташа жылдамдық» тұзағы</h2>
+  <div class="trap">
+    <div class="card box-warn" style="text-align:center">
+      <div style="font-size:30px;margin:10px 0 20px">Жолдың жартысы 3 км/сағ, қалғаны 7 км/сағ.</div>
+      <svg width="560" height="210" viewBox="0 0 560 210">
+        <text x="20" y="128" font-size="70" font-family="PT Serif,serif" font-style="italic" fill="#c8352b">v<tspan font-size="40" dy="14">орт</tspan><tspan dy="-14"> =</tspan></text>
+        <text x="330" y="88" font-size="56" font-family="PT Serif,serif" font-style="italic" fill="#c8352b" text-anchor="middle">3 + 7</text>
+        <line x1="270" y1="108" x2="390" y2="108" stroke="#c8352b" stroke-width="4"/>
+        <text x="330" y="165" font-size="56" font-family="PT Serif,serif" font-style="italic" fill="#c8352b" text-anchor="middle">2</text>
+        <text x="420" y="128" font-size="70" font-family="PT Serif,serif" font-style="italic" fill="#c8352b">= 5</text>
+        <line class="xl" x1="200" y1="20" x2="520" y2="190" stroke="#c8352b" stroke-width="12" stroke-linecap="round" stroke-dasharray="400" stroke-dashoffset="400"></line>
+        <line class="xl x2" x1="520" y1="20" x2="200" y2="190" stroke="#c8352b" stroke-width="12" stroke-linecap="round" stroke-dasharray="400" stroke-dashoffset="400"></line>
+      </svg>
+      <div style="font-size:26px;margin-top:14px"><b class="t">БҰЛ ҚАТЕ!</b> Жылдамдықтарды қосып, екіге бөлуге <b>болмайды</b> (тек уақыттар тең болғанда ғана).</div>
+    </div>
+    <div>
+      <div style="text-align:center;font-family:var(--serif);font-style:italic;font-size:76px;color:var(--violet);margin:20px 0">
+        v<sub style="font-size:40px">орт</sub> = <span style="display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;font-size:60px"><span style="border-bottom:4px solid var(--violet);padding:0 10px">s<sub style="font-size:30px">барлық</sub></span><span>t<sub style="font-size:30px">барлық</sub></span></span>
+      </div>
+      <div class="card" style="text-align:center;font-size:28px;line-height:1.6;border-color:#b9a6e2">
+        <b>Орташа жылдамдық = БАРЛЫҚ жол : БАРЛЫҚ уақыт</b><br>
+        <span class="mono">v<sub>орт</sub> = (s<sub>1</sub> + s<sub>2</sub>) / (t<sub>1</sub> + t<sub>2</sub>)</span><br>
+        Әр бөліктің уақытын міндетті түрде бөлек табу керек: <b>t = s / v</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. Модельдеу -->
+<section class="slide" data-title="Орташа жылдамдықты модельдеу" data-lv="4">
+  <h2>Орташа жылдамдықты модельдеу <small>неге 5 км/сағ шықпайды?</small></h2>
+  <canvas id="halfCv" width="1050" height="430" style="position:absolute;left:40px;top:150px"></canvas>
+  <div class="card" style="position:absolute;right:64px;top:150px;width:400px;font-size:27px;line-height:1.5" id="halfCalc">
+    <b>Есептеу</b><br>t<sub>1</sub> = s / 3,  t<sub>2</sub> = s / 7<br>
+    v<sub>орт</sub> = 2s : (s/3 + s/7)<br>= 2 · 3 · 7 : (3 + 7)<br>= 42 : 10 = <b style="color:var(--violet)">4,2 км/сағ</b><br>
+    <span style="color:var(--red)"><b>4,2 ≠ 5</b></span></div>
+  <div class="card box-info" style="position:absolute;left:64px;top:610px;width:1000px;font-size:26px">Баяу бөлікке (3 км/сағ) өте <b>КӨП</b> уақыт кетеді. Сондықтан орташа жылдамдық баяу жылдамдыққа жақынырақ болады.</div>
+  <button class="btn sm" id="halfAgain" style="position:absolute;right:64px;top:560px">↻ Қайта ойнату</button>
+</section>
+
+<!-- 10. 1/3 -->
+<section class="slide" data-title="Күрделі есеп: жолдың 1/3 бөлігі" data-lv="5">
+  <h2>Күрделі есеп: жолдың 1/3 бөлігі</h2>
+  <div style="display:grid;grid-template-columns:1fr 470px;gap:24px">
+    <div class="card" style="font-size:28px"><b>Есеп:</b> Автомобиль жолдың алғашқы <b>1/3</b> бөлігін <b>20 км/сағ</b>, қалған <b>2/3</b> бөлігін <b>60 км/сағ</b> жүрді. Орташа жылдамдық?</div>
+    <div class="card box-ok" style="font-size:24px"><b>Лайфхак:</b> әріптермен шатаспас үшін <b>жолды ыңғайлы санмен</b> (мысалы 60 км) белгіле!</div>
+  </div>
+  <canvas id="thirdCv" width="1470" height="170" style="margin-top:14px"></canvas>
+  <ol class="steps10" id="steps10" style="margin:0;padding-left:44px">
+    <li>Барлық жол <b>s = 60 км</b>.</li>
+    <li>Бөліктер: <span class="b">s<sub>1</sub> = 20 км</span> (алғашқы 1/3), <span class="o">s<sub>2</sub> = 40 км</span> (қалғаны).</li>
+    <li>Уақыттар: <span class="b">t<sub>1</sub> = 20 : 20 = 1 сағ</span>,  <span class="o">t<sub>2</sub> = 40 : 60 = 2/3 сағ (40 мин)</span>.</li>
+    <li>Жалпы уақыт: t = 1 + 2/3 = <b>5/3 сағ</b>.</li>
+    <li>Қорытынды: v<sub>орт</sub> = 60 : (5/3) = <b class="v">36 км/сағ</b> (= 10 м/с), ал 40 емес!</li>
+  </ol>
+  <button class="btn org sm" id="nextStep10" style="position:absolute;right:64px;bottom:90px">Келесі қадам ▶</button>
+</section>
+
+<!-- 11. Синтез -->
+<section class="slide" data-title="Синтез: ХБЖ анықтамалығы" data-lv="5">
+  <h2>Синтез: ХБЖ жылдам анықтамалығы</h2>
+  <div class="syn">
+    <div class="card"><h3 style="background:var(--blue)">⌛ Уақыт</h3><div class="r">1 сағ = 60 мин = 3600 с</div><div class="r">сағ → мин (× 60)</div><div class="r">0,5 сағ = 30 мин</div></div>
+    <div class="card"><h3 style="background:var(--sky)">▣ Көлем</h3><div class="r">1 л = 1 дм³ = 1000 см³</div><div class="r">1 см³ = 1000 мм³</div><div class="r">л → см³ (× 1000)</div></div>
+    <div class="card"><h3 style="background:var(--orange)">◔ Жылдамдық</h3><div class="r">км/сағ → м/с (: 3,6)</div><div class="r">м/с → км/сағ (× 3,6)</div><div class="r">36 км/сағ = 10 м/с</div></div>
+    <div class="card"><h3 style="background:var(--violet)">⇢ Орташа жылдамдық</h3><div class="r">v<sub>орт</sub> = s<sub>барлық</sub> : t<sub>барлық</sub></div><div class="r">Уақытты бөлек тап: t = s / v</div><div class="r"><b>Арифметикалық ортаны қолданба!</b></div></div>
+  </div>
+</section>
+
+<!-- 12. Сергіту сәті: дуэль -->
+<section class="slide" data-title="Сергіту сәті: ХБЖ дуэлі" data-duel="1">
+  <div class="duel-top">
+    <h2>Сергіту сәті: ХБЖ дуэлі</h2>
+    <span class="pair" id="pairLbl">1-жұп / 5</span>
+    <button class="btn sm" id="duelNew">Жаңа ойын</button>
+  </div>
+  <div class="duel" id="duel"></div>
+  <div class="card duel-over" id="duelOver" hidden></div>
+</section>
+
+<!-- 13. A деңгейі -->
+<section class="slide" data-title="Тренажер: A деңгейі" data-lv="1" data-level="A">
+  <div class="lv-top"><h2>Тренажер: A деңгейі <small>әр жауап — 1 балл</small></h2><div class="stu">Жауап беретін оқушы: <select class="stuSel"></select></div><span class="pts" data-pts="A">0 / 4</span></div>
+  <div class="tasks g2" style="margin-top:30px">
+    <div class="card task" data-task="A1"><div class="tq">A1. <b>2 сағ</b> = ? мин</div><div class="row"><input class="ans" data-id="A1" data-a="120" data-p="1"> мин</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task" data-task="A2"><div class="tq">A2. <b style="color:var(--sky)">0,5 л</b> = ? см³</div><div class="row"><input class="ans" data-id="A2" data-a="500" data-p="1"> см³</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task" data-task="A3"><div class="tq">A3. <b style="color:var(--orange)">36 км/сағ</b> = ? м/с</div><div class="row"><input class="ans" data-id="A3" data-a="10" data-p="1"> м/с</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task" data-task="A4"><div class="tq">A4. <b>15 мин</b> = ? с</div><div class="row"><input class="ans" data-id="A4" data-a="900" data-p="1"> с</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+  </div>
+  <p style="font-size:22px;color:var(--muted);margin-top:24px">Әр жауапқа 2 мүмкіндік бар. Екінші рет қате болса, дұрыс жауап көрсетіледі.</p>
+</section>
+
+<!-- 14. Функционалдық сауаттылық: мензурка -->
+<section class="slide" data-title="Функционалдық сауаттылық: мензурка" data-lv="2">
+  <h2 style="font-size:44px;margin-bottom:12px">Функционалдық сауаттылық: мензурка</h2>
+  <div class="fl">
+    <canvas id="menCv" width="600" height="700"></canvas>
+    <div class="qs">
+      <div class="card" style="font-size:24px;margin-bottom:12px">Аквариумға әдемі тас салмақшысың. Аквариум толып кетпеуі үшін тастың көлемін білу керек. Тасты суы бар <b>мензуркаға</b> салып өлшейміз. Шкалаға мұқият қара: көрсеткішті <b>менискнің төменгі шетінен</b> оқимыз.</div>
+      <div class="row" style="margin-bottom:12px"><button class="btn pri sm" id="menPour">1. Су құю</button><button class="btn org sm" id="menDrop" disabled>2. Тасты салу</button><button class="btn sm" id="menNew">↻ Жаңа мензурка</button></div>
+      <div class="card" style="display:grid;gap:4px">
+        <div class="row">1) Бөлік құны: <input class="ans" id="mq1"> мл <span class="hint">(көрші екі сан айырмасы) : (арасындағы бөлік саны)</span></div>
+        <div class="row">2) Өлшеу қателігі: ± <input class="ans" id="mq2"> мл <span class="hint">бөлік құнының жартысы</span></div>
+        <div class="row">3) Судың бастапқы көлемі V<sub>1</sub> = <input class="ans" id="mq3"> мл</div>
+        <div class="row">4) Тастың көлемі V = V<sub>2</sub> − V<sub>1</sub> = <input class="ans" id="mq4" disabled> см³</div>
+        <div class="row">5) Тастың көлемі ХБЖ-да: <input class="ans" id="mq5" style="width:220px" disabled> м³ <span class="hint">1 см³ = 0,000001 м³</span></div>
+        <div class="row"><button class="btn sm" id="menChk">Тексеру</button><span class="fb" id="menFb"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15. B деңгейі -->
+<section class="slide" data-title="Тренажер: B деңгейі" data-lv="3" data-level="B">
+  <div class="lv-top"><h2>Тренажер: B деңгейі <small>әр тапсырма — 2 балл</small></h2><div class="stu">Жауап беретін оқушы: <select class="stuSel"></select></div><span class="pts" data-pts="B">0 / 8</span></div>
+  <div class="tasks g2">
+    <div class="card task"><div class="tq">B1. <b>1 сағ 15 мин</b> уақытты секундпен және сағатпен өрнекте.</div>
+      <div class="row"><input class="ans" data-id="B1a" data-a="4500" data-p="1"> с,  <input class="ans" data-id="B1b" data-a="1.25" data-p="1"> сағ</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task"><div class="tq">B2. Ыдыстың ұзындығы <b>20 см</b>, ені <b>10 см</b>, биіктігі <b>5 см</b>. Оған неше литр су сияды?</div>
+      <div class="row">V = <input class="ans" data-id="B2a" data-a="1000" data-p="1"> см³ = <input class="ans" data-id="B2b" data-a="1" data-p="1"> л</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task"><div class="tq">B3. Пойыз <b style="color:var(--orange)">25 м/с</b>, автомобиль <b style="color:var(--orange)">72 км/сағ</b>. Қайсысы жылдам? ХБЖ арқылы дәлелде.</div>
+      <div class="row">72 км/сағ = <input class="ans" data-id="B3a" data-a="20" data-p="1"> м/с; жылдамы: <select class="ans" data-id="B3b" data-a="пойыз" data-p="1" style="width:200px"><option value="">таңда</option><option>пойыз</option><option>автомобиль</option><option>бірдей</option></select></div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task"><div class="tq">B4. Велосипедші <b>20 минутта 6 км</b> жүрді. Жылдамдығын км/сағ-пен және м/с-пен тап.</div>
+      <div class="row"><input class="ans" data-id="B4a" data-a="18" data-p="1"> км/сағ = <input class="ans" data-id="B4b" data-a="5" data-p="1"> м/с</div><button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+  </div>
+</section>
+
+<!-- 16. C деңгейі -->
+<section class="slide" data-title="Тренажер: C деңгейі" data-lv="5" data-level="C">
+  <div class="lv-top"><h2>Тренажер: C деңгейі <small>әр есеп — 4 балл</small></h2><div class="stu">Жауап беретін оқушы: <select class="stuSel"></select></div><span class="pts" data-pts="C">0 / 8</span></div>
+  <div class="tasks g2">
+    <div class="card task"><div class="tq">C1 <span style="color:var(--violet)">(тікелей есеп)</span>: Автомобиль жолдың алғашқы <b>1/3</b> бөлігін <b>30 км/сағ</b>, қалғанын <b>90 км/сағ</b> жүрді. Орташа жылдамдықты км/сағ және м/с-пен тап.</div>
+      <div class="hint">Жолды 90 км деп ал.</div>
+      <div class="row">t<sub>1</sub> = <input class="ans" data-id="C1a" data-a="1" data-p="1"> сағ;  t<sub>2</sub> = <input class="ans" data-id="C1b" data-a="2/3" data-p="1" data-tol="0.01"> сағ</div>
+      <div class="row">v<sub>орт</sub> = <input class="ans" data-id="C1c" data-a="54" data-p="1"> км/сағ = <input class="ans" data-id="C1d" data-a="15" data-p="1"> м/с</div>
+      <button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+    <div class="card task"><div class="tq">C2 <span style="color:var(--violet)">(кері есеп, олимпиада 2023)</span>: Автобустың бүкіл жолдағы орташа жылдамдығы <b>48 км/сағ</b>. Жолдың алғашқы <b>1/3</b> бөлігін ол <b>32 км/сағ</b> жүрді. Қалған бөлігін қандай жылдамдықпен жүрді?</div>
+      <div class="hint">Жолды 96 км деп ал.</div>
+      <div class="row">t = <input class="ans" data-id="C2a" data-a="2" data-p="1"> сағ;  t<sub>1</sub> = <input class="ans" data-id="C2b" data-a="1" data-p="1"> сағ</div>
+      <div class="row">t<sub>2</sub> = <input class="ans" data-id="C2c" data-a="1" data-p="1"> сағ;  v<sub>2</sub> = <input class="ans" data-id="C2d" data-a="64" data-p="1"> км/сағ</div>
+      <button class="btn sm chk">Тексеру</button><div class="fb"></div></div>
+  </div>
+  <p style="font-size:21px;color:var(--muted)">Бөлшекті 2/3 немесе 0,67 деп жазуға болады.</p>
+</section>
+
+<!-- 17. Нәтиже -->
+<section class="slide" data-title="Жауап кілті және бағалау" data-lv="5" data-results="1">
+  <h2 style="font-size:44px;margin-bottom:14px">Нәтиже және өзін-өзі бағалау</h2>
+  <div style="display:grid;grid-template-columns:1fr 470px;gap:28px">
+    <div>
+      <div style="max-height:470px;overflow:auto"><table class="res" id="resT"></table></div>
+      <div class="row" style="display:flex;gap:12px;margin-top:14px"><button class="btn sm" id="keyBtn">Жауап кілтін көрсету</button><button class="btn sm" id="copyBtn">Нәтижені көшіру</button><span id="copyMsg" style="font-size:20px;color:var(--green);align-self:center"></span></div>
+      <table class="keyt" id="keyT" hidden style="margin-top:10px">
+        <tr><td><b>A:</b> 120 мин · 500 см³ · 10 м/с · 900 с</td></tr>
+        <tr><td><b>B:</b> 4500 с; 1,25 сағ · 1000 см³ = 1 л · 72 км/сағ = 20 м/с → пойыз · 18 км/сағ = 5 м/с</td></tr>
+        <tr><td><b>C1:</b> s = 90 км; t<sub>1</sub> = 1 сағ; t<sub>2</sub> = 2/3 сағ; v<sub>орт</sub> = 90 : 5/3 = 54 км/сағ = 15 м/с</td></tr>
+        <tr><td><b>C2:</b> s = 96 км; t = 2 сағ; t<sub>1</sub> = 1 сағ; t<sub>2</sub> = 1 сағ; v<sub>2</sub> = 64 км/сағ</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="scale">
+        <div><i style="background:#2c8a4f"></i>18–20 балл: <b>«5»</b> (сарапшы)</div>
+        <div><i style="background:#9cc63b"></i>14–17 балл: <b>«4»</b> (зерттеуші)</div>
+        <div><i style="background:#ef8a2b"></i>9–13 балл: <b>«3»</b> (стажер)</div>
+        <div><i style="background:#d9432f"></i>0–8 балл: <b>«2»</b> (қайталау қажет)</div>
+      </div>
+      <div class="card" style="margin-top:22px;font-size:26px;text-align:center;border-color:var(--ink)"><b>Мен енді ХБЖ өлшемдері мен орташа жылдамдықты шатастырмаймын!</b></div>
+      <div class="card" style="margin-top:16px;font-size:21px"><b>Үй тапсырмасы:</b> үйдегі 3 ыдыстың көлемін л және см³-пен жаз; жолдың 1/3 бөлігін 15 км/сағ, қалғанын 45 км/сағ жүрген велосипедшінің орташа жылдамдығын тап (км/сағ және м/с).</div>
+    </div>
+  </div>
+</section>
+
+<canvas id="ink" width="1600" height="844"></canvas>
+<div class="meter" id="meter"></div>
+
+<div id="bar">
+  <button id="prev" title="Алдыңғы (←)">◀</button><span class="num" id="num">1 / 17</span><button id="next" title="Келесі (→)">▶</button>
+  <div class="dots" id="dots"></div>
+  <span class="ttl" id="ttl"></span>
+  <div class="pens"><button id="penBtn" title="Тақтаға жазу">✎ Қалам</button>
+    <button class="c" data-c="#1d2b45" style="background:#1d2b45" aria-label="көк-қара"></button><button class="c" data-c="#c8352b" style="background:#c8352b" aria-label="қызыл"></button><button class="c" data-c="#2c8a4f" style="background:#2c8a4f" aria-label="жасыл"></button>
+    <button id="clrInk" title="Осы слайдтағы жазуды өшіру">Өшіру</button></div>
+  <button id="stuBtn">Оқушылар</button>
+  <button id="fsBtn" title="Толық экран">⛶ Толық экран</button>
+</div>
+
+<div id="modal" hidden><div class="card">
+  <h3 style="margin:0 0 8px;font-size:28px">Оқушылар тізімі</h3>
+  <p style="margin:0 0 10px;font-size:20px;color:var(--muted)">Әр жолға бір оқушы. Дуэльде алғашқы 10 оқушы тізім ретімен жұп-жұп болып шығады (1–2, 3–4, …).</p>
+  <textarea id="stuTa"></textarea>
+  <div style="display:flex;gap:12px;margin-top:12px;justify-content:flex-end"><button class="btn sm" id="stuCancel">Болдырмау</button><button class="btn pri sm" id="stuSave">Сақтау</button></div>
+</div></div>
+</div>
+
+<script>
+"use strict";
+/* ================= жалпы ================= */
+const $ = id => document.getElementById(id);
+const stage = $("stage");
+const slides = [...document.querySelectorAll(".slide")];
+const N = slides.length;
+let cur = 0;
+const fmt = (x, d = 4) => { const r = Math.round(x * 10 ** d) / 10 ** d; return String(r).replace(".", ","); };
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+
+/* жауапты санға айналдыру: 1,25 · 2/3 · 2·10^-5 · 2e-5 */
+function num(s) {
+  s = String(s).trim().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".").replace(/−/g, "-");
+  s = s.replace(/(км\/сағ|м\/с|км\/с|см³|см3|мм³|дм³|м³|м3|мин|сағ|мл|км|см|мм|л|с|м|г|кг)\.?$/i, "");
+  let m = s.match(/^(-?[\d.]+)(?:[·*×x]|\*)10\^?\(?(-?\d+)\)?$/);
+  if (m) return parseFloat(m[1]) * 10 ** parseInt(m[2]);
+  m = s.match(/^(-?\d+(?:\.\d+)?)\/(\d+(?:\.\d+)?)$/);
+  if (m) return parseFloat(m[1]) / parseFloat(m[2]);
+  if (s === "" || !/^-?(\d+\.?\d*|\.\d+)(e-?\d+)?$/.test(s)) return NaN;
+  return parseFloat(s);
+}
+const same = (a, b, tol) => isFinite(a) && Math.abs(a - b) <= (tol != null ? tol : Math.max(1e-9, Math.abs(b) * 1e-3));
+
+/* ================= масштаб және навигация ================= */
+function fit() { const s = Math.min(innerWidth / 1600, innerHeight / 900); stage.style.transform = `translate(-50%,-50%) scale(${s})`; }
+addEventListener("resize", fit); fit();
+
+const hooks = {};   // слайд индексі → {enter, leave}
+function go(i) {
+  i = Math.max(0, Math.min(N - 1, i));
+  if (hooks[cur] && hooks[cur].leave) hooks[cur].leave();
+  saveInk();
+  slides[cur].classList.remove("on");
+  cur = i;
+  slides[cur].classList.add("on");
+  $("num").textContent = `${cur + 1} / ${N}`;
+  $("ttl").textContent = slides[cur].dataset.title || "";
+  [...$("dots").children].forEach((d, k) => d.classList.toggle("on", k === cur));
+  const lv = +slides[cur].dataset.lv || 0;
+  $("meter").hidden = !lv;
+  if (lv) $("meter").innerHTML = "Қиындық деңгейі: " + [1, 2, 3, 4, 5].map(k => `<i class="${k <= lv ? "f" + k : ""}"></i>`).join("") + ` ${lv}/5`;
+  loadInk();
+  if (hooks[cur] && hooks[cur].enter) hooks[cur].enter();
+  try { history.replaceState(null, "", "#" + (cur + 1)); } catch (e) {}
+}
+slides.forEach((s, k) => { const d = document.createElement("span"); d.title = s.dataset.title; d.onclick = () => go(k); $("dots").appendChild(d); });
+$("prev").onclick = () => go(cur - 1);
+$("next").onclick = () => go(cur + 1);
+addEventListener("keydown", e => {
+  if (e.target.matches("input,textarea,select")) return;
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+  if (["ArrowLeft", "PageUp"].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+});
+$("fsBtn").onclick = () => { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (e) {} };
+
+/* ================= қалам (әр слайдқа бөлек) ================= */
+const ink = $("ink"), ictx = ink.getContext("2d");
+const inkStore = {};
+let penOn = false, penColor = "#1d2b45";
+$("penBtn").onclick = () => { penOn = !penOn; ink.classList.toggle("on", penOn); $("penBtn").classList.toggle("on", penOn); };
+document.querySelectorAll(".pens .c").forEach(b => b.onclick = () => { penColor = b.dataset.c; if (!penOn) $("penBtn").click(); });
+$("clrInk").onclick = () => { ictx.clearRect(0, 0, 1600, 844); delete inkStore[cur]; };
+function saveInk() { try { inkStore[cur] = ictx.getImageData(0, 0, 1600, 844); } catch (e) {} }
+function loadInk() { ictx.clearRect(0, 0, 1600, 844); if (inkStore[cur]) ictx.putImageData(inkStore[cur], 0, 0); }
+function canvasPen(cv, ctx, getColor, width) {
+  const pts = {};
+  const pos = e => { const r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; };
+  cv.addEventListener("pointerdown", e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); pts[e.pointerId] = pos(e); });
+  cv.addEventListener("pointermove", e => {
+    const p0 = pts[e.pointerId]; if (!p0) return;
+    const p = pos(e); ctx.strokeStyle = getColor(); ctx.lineWidth = width; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath(); ctx.moveTo(p0[0], p0[1]); ctx.lineTo(p[0], p[1]); ctx.stroke(); pts[e.pointerId] = p;
+  });
+  const end = e => { delete pts[e.pointerId]; };
+  cv.addEventListener("pointerup", end); cv.addEventListener("pointercancel", end);
+}
+canvasPen(ink, ictx, () => penColor, 4);
+
+/* ================= оқушылар тізімі ================= */
+let roster = store.get("hbj7_roster", Array.from({ length: 10 }, (_, i) => `${i + 1}-оқушы`));
+function fillSelects() {
+  document.querySelectorAll(".stuSel").forEach(s => { const v = curStu; s.innerHTML = roster.map(n => `<option>${n.replace(/</g, "&lt;")}</option>`).join(""); s.value = roster.includes(v) ? v : roster[0]; });
+}
+$("stuBtn").onclick = () => { $("stuTa").value = roster.join("\n"); $("modal").hidden = false; };
+$("stuCancel").onclick = () => $("modal").hidden = true;
+$("stuSave").onclick = () => {
+  const list = $("stuTa").value.split("\n").map(s => s.trim()).filter(Boolean);
+  if (list.length) { roster = list; store.set("hbj7_roster", roster); }
+  $("modal").hidden = true; if (!roster.includes(curStu)) curStu = roster[0]; fillSelects(); refreshLevels(); duelReset(); renderResults();
+};
+
+/* ================= 1. Титул ================= */
+(function () {
+  const idx = 0, cube = $("heroCube"), tk = $("ticks");
+  // изометриялық куб 3×3×3
+  const s = 52, cx = 120, cy = 150, P = (x, y, z) => [cx + (x - z) * s * .866, cy + (x + z) * s * .5 - y * s];
+  let h = "";
+  const cells = [];
+  for (let y = 0; y < 3; y++) for (let z = 0; z < 3; z++) for (let x = 0; x < 3; x++) cells.push([x, y, z]);
+  cells.sort((p, q) => p[1] - q[1] || (p[0] + p[2]) - (q[0] + q[2]));
+  cells.forEach(([x, y, z], idx) => {
+    const top = [P(x, y + 1, z), P(x + 1, y + 1, z), P(x + 1, y + 1, z + 1), P(x, y + 1, z + 1)];
+    const lf = [P(x, y, z + 1), P(x + 1, y, z + 1), P(x + 1, y + 1, z + 1), P(x, y + 1, z + 1)];
+    const rt = [P(x + 1, y, z), P(x + 1, y, z + 1), P(x + 1, y + 1, z + 1), P(x + 1, y + 1, z)];
+    const d = `style="animation:up .5s ${(idx * .06).toFixed(2)}s both"`;
+    const pp = a => a.map(p => p.join(",")).join(" ");
+    h += `<g ${d}><polygon points="${pp(top)}" fill="#dceaf9" stroke="#2452a3" stroke-width="1.5"/><polygon points="${pp(lf)}" fill="#b9d3f1" stroke="#2452a3" stroke-width="1.5"/><polygon points="${pp(rt)}" fill="#9dc0ea" stroke="#2452a3" stroke-width="1.5"/></g>`;
+  });
+  cube.innerHTML = h;
+  let t = "";
+  for (let k = 0; k <= 12; k++) { const a = (-135 + k * 22.5) * Math.PI / 180; t += `<line x1="${Math.sin(a) * 122}" y1="${-Math.cos(a) * 122}" x2="${Math.sin(a) * (k % 3 ? 110 : 100)}" y2="${-Math.cos(a) * (k % 3 ? 110 : 100)}" stroke="#1d2b45" stroke-width="${k % 3 ? 2 : 4}"/>`; }
+  tk.innerHTML = t;
+  let raf, t0;
+  const loop = ts => {
+    if (!t0) t0 = ts; const el = (ts - t0) / 1000;
+    const v = 54 + 36 * (0.5 + 0.5 * Math.sin(el * 0.9));         // 54…90 км/сағ
+    const vr = Math.round(v / 3.6) * 3.6;
+    $("needle").setAttribute("transform", `rotate(${-135 + v / 120 * 270})`);
+    $("spdTxt").textContent = `${fmt(vr, 1)} км/сағ`; $("spdTxt2").textContent = `= ${Math.round(vr / 3.6)} м/с`;
+    const cs = Math.floor(el * 100) % 100, ss = Math.floor(el) % 60, mm = Math.floor(el / 60) % 60;
+    $("clk").textContent = `${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")},${String(cs).padStart(2, "0")}`;
+    raf = requestAnimationFrame(loop);
+  };
+  hooks[idx] = { enter() { t0 = 0; raf = requestAnimationFrame(loop); cube.innerHTML = h; }, leave() { cancelAnimationFrame(raf); } };
+})();
+
+/* ================= 2. Қатені тап ================= */
+document.querySelectorAll("#errGrid .err").forEach(c => c.onclick = () => c.classList.toggle("open"));
+hooks[1] = { leave() { document.querySelectorAll("#errGrid .err").forEach(c => c.classList.remove("open")); } };
+
+/* ================= 3. Уақыт ================= */
+(function () {
+  function gear(r, teeth, color) {
+    let d = "";
+    for (let k = 0; k < teeth; k++) {
+      const a0 = k / teeth * 2 * Math.PI, a1 = a0 + Math.PI / teeth * .45, a2 = a0 + Math.PI / teeth * 1.0, a3 = a0 + Math.PI / teeth * 1.45;
+      const R = r + 16, p = (a, rr) => `${(Math.sin(a) * rr).toFixed(1)},${(-Math.cos(a) * rr).toFixed(1)}`;
+      d += `${k ? "L" : "M"}${p(a0, r)} L${p(a1, R)} L${p(a2, R)} L${p(a3, r)} `;
+    }
+    return `<path d="${d}Z" fill="${color}"/>`;
+  }
+  $("g1").innerHTML = gear(98, 14, "#2452a3"); $("g2").innerHTML = gear(80, 12, "#3b6cc2"); $("g3").innerHTML = gear(62, 10, "#4a9fd8");
+  $("g1").style.animation = "spin 30s linear infinite"; $("g2").style.animation = "spinr 10s linear infinite"; $("g3").style.animation = "spin 3s linear infinite";
+  const upd = () => { const h = num($("hIn").value); $("hMin").textContent = isFinite(h) ? fmt(h * 60) : "?"; $("hSec").textContent = isFinite(h) ? fmt(h * 3600) : "?"; };
+  $("hIn").addEventListener("input", upd);
+})();
+
+/* ================= 4. Көлем: 1000 кубик ================= */
+(function () {
+  const cv = $("cubeCv"), ctx = cv.getContext("2d");
+  const s = 26, ox = 380, oy = 470;
+  const P = (x, y, z) => [ox + (x - z) * s * .866, oy + (x + z) * s * .5 - y * s];
+  function poly(pts, fill) { ctx.beginPath(); pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1])); ctx.closePath(); ctx.fillStyle = fill; ctx.fill(); ctx.stroke(); }
+  function small(x, y, z, hl) {
+    ctx.strokeStyle = hl ? "#9a2a20" : "rgba(36,82,163,.55)"; ctx.lineWidth = 1;
+    poly([P(x, y + 1, z), P(x + 1, y + 1, z), P(x + 1, y + 1, z + 1), P(x, y + 1, z + 1)], hl ? "#f08a7f" : "#dceaf9");
+    poly([P(x, y, z + 1), P(x + 1, y, z + 1), P(x + 1, y + 1, z + 1), P(x, y + 1, z + 1)], hl ? "#e0574a" : "#b9d3f1");
+    poly([P(x + 1, y, z), P(x + 1, y, z + 1), P(x + 1, y + 1, z + 1), P(x + 1, y + 1, z)], hl ? "#c8352b" : "#9dc0ea");
+  }
+  function frame() {
+    ctx.strokeStyle = "#1d2b45"; ctx.lineWidth = 2.5; ctx.setLineDash([8, 6]);
+    const c = [[0, 0, 0], [10, 0, 0], [10, 0, 10], [0, 0, 10], [0, 10, 0], [10, 10, 0], [10, 10, 10], [0, 10, 10]].map(p => P(...p));
+    [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]].forEach(([a, b]) => { ctx.beginPath(); ctx.moveTo(...c[a]); ctx.lineTo(...c[b]); ctx.stroke(); });
+    ctx.setLineDash([]);
+    ctx.fillStyle = "#1d2b45"; ctx.font = "bold 24px PT Sans, Arial";
+    const a = P(5, 0, 10); ctx.fillText("10 см", a[0] - 120, a[1] + 34);
+    const b = P(10, 0, 5); ctx.fillText("10 см", b[0] + 30, b[1] + 30);
+    const d = P(10, 5, 0); ctx.fillText("10 см", d[0] + 18, d[1]);
+  }
+  let n = 0, raf, last = 0;
+  const order = [];
+  for (let y = 0; y < 10; y++) for (let z = 9; z >= 0; z--) for (let x = 9; x >= 0; x--) order.push([x, y, z]);
+  // салу реті: артқыдан алдыға (painter)
+  order.sort((p, q) => p[1] - q[1] || (p[0] + p[2]) - (q[0] + q[2]));
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height); frame();
+    for (let k = 0; k < n; k++) small(...order[k], order[k][0] === 9 && order[k][1] === 0 && order[k][2] === 9);
+    $("cubeN").textContent = n;
+    $("cubeL").textContent = n >= 1000 ? "= 1 дм³ = 1 литр!" : n >= 100 ? `${Math.floor(n / 100)} қабат × 100 кубик` : n >= 10 ? `бір қатарда 10 кубик` : "";
+  }
+  const loop = ts => {
+    if (ts - last > 16) { n = Math.min(1000, n + (n < 10 ? 1 : n < 100 ? 3 : 14)); draw(); last = ts; }
+    if (n < 1000) raf = requestAnimationFrame(loop);
+  };
+  const start = () => { cancelAnimationFrame(raf); n = 0; draw(); raf = requestAnimationFrame(loop); };
+  $("cubeAgain").onclick = start;
+  hooks[3] = { enter: start, leave() { cancelAnimationFrame(raf); } };
+})();
+
+/* ================= 5. Жылдамдық: 3,6 ================= */
+(function () {
+  const vals = [18, 36, 54, 72, 90, 108];
+  let raf, t0 = 0, k = 0;
+  const loop = ts => {
+    if (!t0) t0 = ts;
+    const T = 3200, ph = ((ts - t0) % T) / T, cyc = Math.floor((ts - t0) / T);
+    if (cyc !== k) { k = cyc; }
+    const v = vals[k % vals.length], ms = v / 3.6, vb = [1, 2, 5, 10, 20, 25][k % 6];
+    // оңға: км/сағ → м/с
+    const xr = 230 + ph * 1060;
+    $("chipR").setAttribute("transform", `translate(${xr},150)`);
+    $("chipRt").textContent = xr < 740 ? `${v} км/сағ` : `${fmt(ms)} м/с`;
+    const xl = 1250 - ph * 1060;
+    $("chipL").setAttribute("transform", `translate(${xl},270)`);
+    $("chipLt").textContent = xl > 740 ? `${vb} м/с` : `${fmt(vb * 3.6)} км/сағ`;
+    raf = requestAnimationFrame(loop);
+  };
+  hooks[4] = { enter() { t0 = 0; k = 0; raf = requestAnimationFrame(loop); }, leave() { cancelAnimationFrame(raf); } };
+  $("kIn").addEventListener("input", () => { const v = num($("kIn").value); $("mIn").value = isFinite(v) ? fmt(v / 3.6, 3) : ""; });
+  $("mIn").addEventListener("input", () => { const v = num($("mIn").value); $("kIn").value = isFinite(v) ? fmt(v * 3.6, 3) : ""; });
+})();
+
+/* ================= 6. Жылдамдық матрицасы ================= */
+(function () {
+  const cv = $("laneCv"), ctx = cv.getContext("2d");
+  const L = [["🚶", "жаяу адам", 1], ["🏃", "жүгіруші", 5], ["🚲", "велосипед", 10], ["🚗", "автомобиль", 20], ["🚄", "пойыз", 25]];
+  let raf, t0 = 0;
+  const loop = ts => {
+    if (!t0) t0 = ts; const t = (ts - t0) / 1000;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    L.forEach(([ic, nm, ms], i) => {
+      const y = 22 + i * 82;
+      ctx.fillStyle = i % 2 ? "#ffffff" : "#eef3fa"; ctx.fillRect(0, y, cv.width, 76);
+      ctx.strokeStyle = "#cdd5e0"; ctx.strokeRect(0.5, y + .5, cv.width - 1, 75);
+      ctx.fillStyle = "#1d2b45"; ctx.font = "bold 26px PT Mono, monospace"; ctx.textBaseline = "middle";
+      ctx.fillText(`${fmt(ms * 3.6)} км/сағ = ${ms} м/с`, 14, y + 38);
+      ctx.font = "20px PT Sans, Arial"; ctx.fillStyle = "#5f6b7f"; ctx.fillText(nm, 14, y + 62);
+      const x0 = 430, W = cv.width - x0 - 60;
+      ctx.strokeStyle = "rgba(29,43,69,.18)"; ctx.setLineDash([10, 10]); ctx.beginPath(); ctx.moveTo(x0, y + 38); ctx.lineTo(cv.width - 10, y + 38); ctx.stroke(); ctx.setLineDash([]);
+      const x = x0 + ((t * ms * 30) % (W + 60)) - 30;
+      ctx.font = "48px 'Segoe UI Emoji', 'Apple Color Emoji', sans-serif";
+      ctx.save(); ctx.translate(x, y + 40); ctx.scale(-1, 1); ctx.fillText(ic, -26, 0); ctx.restore();
+    });
+    raf = requestAnimationFrame(loop);
+  };
+  hooks[5] = { enter() { t0 = 0; raf = requestAnimationFrame(loop); }, leave() { cancelAnimationFrame(raf); } };
+})();
+
+/* ================= 7. Алгоритм ================= */
+(function () {
+  let tm = [];
+  const run = () => { tm.forEach(clearTimeout); tm = []; const st = [...document.querySelectorAll("#algo .st")]; st.forEach(s => s.classList.remove("on")); st.forEach((s, i) => tm.push(setTimeout(() => s.classList.add("on"), 400 + i * 1400))); };
+  $("algoAgain").onclick = run;
+  hooks[6] = { enter: run, leave() { tm.forEach(clearTimeout); } };
+})();
+
+/* ================= 8. Тұзақ: SVG анимациясын қайта бастау ================= */
+
+/* ================= 9. Жартылай жол модельі ================= */
+(function () {
+  const cv = $("halfCv"), ctx = cv.getContext("2d");
+  let raf, t0 = 0;
+  const X0 = 150, X1 = 1000, MID = (X0 + X1) / 2;
+  const T1 = 7, T2 = 3;                            // уақыт үлесі 7:3 (s/3 : s/7)
+  const TOT = 5.0;                                 // анимация ұзақтығы, с
+  function car(x, y, c) { ctx.fillStyle = c; ctx.beginPath(); ctx.roundRect(x - 44, y - 18, 88, 30, 8); ctx.fill(); ctx.beginPath(); ctx.roundRect(x - 26, y - 36, 50, 22, 8); ctx.fill(); ctx.fillStyle = "#1d2b45"; ctx.beginPath(); ctx.arc(x - 24, y + 14, 10, 0, 7); ctx.arc(x + 24, y + 14, 10, 0, 7); ctx.fill(); }
+  function draw(p) {           // p — уақыт үлесі 0..1
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.font = "bold 26px PT Sans, Arial"; ctx.fillStyle = "#1d2b45";
+    ctx.fillText("ЖОЛ", 10, 140); ctx.fillText("УАҚЫТ", 10, 300);
+    ctx.font = "24px PT Sans, Arial"; ctx.fillStyle = "#5f6b7f";
+    ctx.fillText("1-жартысы: v₁ = 3 км/сағ", X0 + 60, 40); ctx.fillText("2-жартысы: v₂ = 7 км/сағ", MID + 60, 40);
+    ctx.fillStyle = "#3d2f7a"; ctx.fillRect(X0, 120, X1 - X0, 26);
+    ctx.strokeStyle = "#fff"; ctx.setLineDash([16, 12]); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X0, 133); ctx.lineTo(X1, 133); ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle = "#1d2b45"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(MID, 56); ctx.lineTo(MID, 360); ctx.stroke();
+    // машина орны
+    const pt = Math.min(1, p), tA = T1 / (T1 + T2);
+    const xs = pt < tA ? X0 + (MID - X0) * pt / tA : MID + (X1 - MID) * (pt - tA) / (1 - tA);
+    car(Math.min(xs, X1 - 30), 96, "#5b3fa0");
+    // уақыт жолақтары: ені уақытқа пропорционал
+    const w1 = (X1 - X0) * T1 / (T1 + T2), w2 = (X1 - X0) * T2 / (T1 + T2);
+    ctx.fillStyle = "#e3e0ef"; ctx.fillRect(X0, 260, w1 - 6, 70); ctx.fillRect(X0 + w1, 260, w2, 70);
+    ctx.fillStyle = "#5b3fa0"; ctx.fillRect(X0, 260, Math.min(w1 - 6, (X1 - X0) * pt), 70);
+    if (pt > tA) { ctx.fillStyle = "#8a6fd0"; ctx.fillRect(X0 + w1, 260, Math.min(w2, (X1 - X0) * pt - w1), 70); }
+    ctx.fillStyle = "#fff"; ctx.font = "bold 26px PT Sans, Arial";
+    if (pt > .15) ctx.fillText("t₁ = s/3  (баяу — ұзақ)", X0 + 20, 304);
+    if (pt > tA + .08) ctx.fillText("t₂ = s/7", X0 + w1 + 16, 304);
+    ctx.fillStyle = "#5f6b7f"; ctx.font = "22px PT Sans, Arial";
+    ctx.fillText("Жолдың жартылары тең, бірақ уақыттары тең емес: t₁ : t₂ = 7 : 3", X0, 395);
+  }
+  const loop = ts => { if (!t0) t0 = ts; const p = (ts - t0) / 1000 / TOT; draw(p); if (p < 1) raf = requestAnimationFrame(loop); };
+  const start = () => { cancelAnimationFrame(raf); t0 = 0; raf = requestAnimationFrame(loop); };
+  $("halfAgain").onclick = start;
+  hooks[8] = { enter: start, leave() { cancelAnimationFrame(raf); } };
+})();
+
+/* ================= 10. 1/3 бөлігі ================= */
+(function () {
+  const cv = $("thirdCv"), ctx = cv.getContext("2d");
+  let raf, t0 = 0, step = 0;
+  const X0 = 40, X1 = 1430, A = X0 + (X1 - X0) / 3;
+  const T1 = 1, T2 = 2 / 3, SC = 2.6;            // нақты уақыт сағатпен, SC с/сағ анимацияда
+  function draw(t) {               // t — модельдегі уақыт (сағ)
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = "#2f6fc0"; ctx.fillRect(X0, 90, A - X0, 30);
+    ctx.fillStyle = "#e8731a"; ctx.fillRect(A, 90, X1 - A, 30);
+    ctx.strokeStyle = "#fff"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(A + (X1 - A) / 2, 90); ctx.lineTo(A + (X1 - A) / 2, 120); ctx.stroke();
+    ctx.font = "bold 24px PT Sans, Arial"; ctx.textAlign = "center";
+    ctx.fillStyle = "#2f6fc0"; ctx.fillText("1/3 бөлік: 20 км, 20 км/сағ", (X0 + A) / 2, 156);
+    ctx.fillStyle = "#e8731a"; ctx.fillText("2/3 бөлік: 40 км, 60 км/сағ", (A + X1) / 2, 156);
+    const x = t < T1 ? X0 + (A - X0) * t / T1 : Math.min(X1, A + (X1 - A) * (t - T1) / T2);
+    ctx.font = "50px 'Segoe UI Emoji', sans-serif"; ctx.save(); ctx.translate(x, 70); ctx.scale(-1, 1); ctx.fillText("🚗", 0, 0); ctx.restore();
+    const min = Math.round(Math.min(t, T1 + T2) * 60);
+    ctx.textAlign = "left"; ctx.fillStyle = "#1d2b45"; ctx.font = "bold 26px PT Mono, monospace";
+    ctx.fillText(`⏱ ${Math.floor(min / 60)} сағ ${String(min % 60).padStart(2, "0")} мин`, X1 - 300, 34);
+    ctx.textAlign = "start";
+  }
+  const loop = ts => { if (!t0) t0 = ts; const t = (ts - t0) / 1000 / SC; draw(t); if (t < T1 + T2 + .2) raf = requestAnimationFrame(loop); };
+  const lis = () => [...document.querySelectorAll("#steps10 li")];
+  $("nextStep10").onclick = () => {
+    const l = lis();
+    if (step >= l.length) { step = 0; l.forEach(x => x.classList.remove("on")); t0 = 0; cancelAnimationFrame(raf); raf = requestAnimationFrame(loop); }
+    else l[step++].classList.add("on");
+    $("nextStep10").textContent = step >= l.length ? "↻ Басынан" : "Келесі қадам ▶";
+  };
+  hooks[9] = { enter() { step = 0; lis().forEach(x => x.classList.remove("on")); $("nextStep10").textContent = "Келесі қадам ▶"; t0 = 0; raf = requestAnimationFrame(loop); }, leave() { cancelAnimationFrame(raf); } };
+})();
+
+/* ================= 12. ДУЭЛЬ ================= */
+const DUEL = slides.findIndex(s => s.dataset.duel);
+const ROUNDS = 5, WRITE_AT = 2, PAIRS = 5;
+let tapPool = [], writePool = [], duelLog = [], pair = 0, sides = [];
+
+function optsFrom(val, dis, unit) {
+  const set = []; const add = v => { if (!isFinite(v) || v <= 0) return; const s = fmt(v, 4) + (unit ? " " + unit : ""); if (!set.includes(s)) set.push(s); };
+  add(val); dis.forEach(add); [2, .5, 10, .1].forEach(k => { if (set.length < 4) add(val * k); });
+  const right = set[0], o = shuffle(set.slice(0, 4));
+  return { o, a: o.indexOf(right) };
+}
+/* Әр оқушыға бекітілген 5 сұрақ (1–4–5 таңдау, 3 — жазбаша).
+   50 сұрақтың бірде-біреуі қайталанбайды: жұп ішінде де, жұптар арасында да.
+   Жұптағы екі оқушының сұрақтары бір типті, бірақ сандары басқа — әділ дуэль. */
+let duelSets = [];
+function buildSets() {
+  const hm = h => ({ q: `${fmt(h)} сағ = ? мин`, ...optsFrom(h * 60, [h * 100, h * 10, h * 3600], "мин") });
+  const ms = m => ({ q: `${fmt(m)} мин = ? с`, ...optsFrom(m * 60, [m * 100, m * 6, m * 3600], "с") });
+  const hs = h => ({ q: `${fmt(h)} сағ = ? с`, ...optsFrom(h * 3600, [h * 60, h * 360, h * 600], "с") });
+  const mh = m => ({ q: `${m} мин = ? сағ`, ...optsFrom(m / 60, [m / 100, m / 10, m * 60], "сағ") });
+  const lc = l => ({ q: `${fmt(l)} л = ? см³`, ...optsFrom(l * 1000, [l * 100, l * 10, l * 1e6], "см³") });
+  const mlc = ml => ({ q: `${ml} мл = ? см³`, ...optsFrom(ml, [ml * 1000, ml / 1000, ml * 10], "см³") });
+  const cl = c => ({ q: `${c} см³ = ? л`, ...optsFrom(c / 1000, [c / 100, c / 10, c * 1000], "л") });
+  const m3 = m => ({ q: `${fmt(m)} м³ = ? л`, ...optsFrom(m * 1000, [m * 100, m * 1e6, m * 10], "л") });
+  const km = v => ({ q: `${fmt(v)} км/сағ = ? м/с`, ...optsFrom(v / 3.6, [v * 3.6, v / 60, v / 10], "м/с") });
+  const mk = v => ({ q: `${fmt(v)} м/с = ? км/сағ`, ...optsFrom(v * 3.6, [v / 3.6, v * 60, v * 10], "км/сағ") });
+  const X = (q, right, wrong) => { const o = shuffle([right, ...wrong]); return { q, o, a: o.indexOf(right) }; };
+  const W = (q, a) => ({ w: 1, q, a });
+  duelSets = [
+    // 1-жұп
+    [hm(2), lc(1), W("Жылдамдық формуласын жаз", "v = s / t"), km(36), X("ХБЖ-дағы жылдамдық бірлігі", "м/с", ["км/сағ", "км/мин", "см/с"])],
+    [ms(3), m3(2), W("Уақыт формуласын жаз", "t = s / v"), mk(5), X("ХБЖ-дағы уақыт бірлігі", "с", ["мин", "сағ", "тәулік"])],
+    // 2-жұп
+    [hm(1.5), mlc(250), W("Жол формуласын жаз", "s = v · t"), km(54), X("ХБЖ-дағы көлем бірлігі", "м³", ["л", "см³", "мл"])],
+    [ms(10), cl(500), W("Орташа жылдамдық формуласын жаз", "v<sub>орт</sub> = (s<sub>1</sub> + s<sub>2</sub>) / (t<sub>1</sub> + t<sub>2</sub>)"), mk(20), X("Қайсысы жылдам: 20 м/с әлде 54 км/сағ?", "20 м/с", ["54 км/сағ", "тең", "анықтау мүмкін емес"])],
+    // 3-жұп
+    [hs(0.5), lc(3), W("1 сағ 30 мин-ды секундқа айналдыр (шешуін жаз)", "1 сағ 30 мин = 90 мин = 90 · 60 = 5400 с"), km(90), X("Қайсысы жылдам: 10 м/с әлде 30 км/сағ?", "10 м/с", ["30 км/сағ", "тең", "анықтау мүмкін емес"])],
+    [mh(30), m3(0.5), W("45 мин-ды сағатпен жаз (шешуін жаз)", "45 : 60 = 0,75 сағ"), mk(30), X("Қайсысы баяу: 18 км/сағ әлде 4 м/с?", "4 м/с", ["18 км/сағ", "тең", "анықтау мүмкін емес"])],
+    // 4-жұп
+    [hm(0.25), cl(1500), W("72 км/сағ-ты м/с-қа айналдыр (шешуін жаз)", "72 : 3,6 = 20 м/с"), km(144), X("Орташа жылдамдық қалай табылады?", "барлық жол : барлық уақыт", ["жылдамдықтардың арифметикалық ортасы", "барлық уақыт : барлық жол", "жол · уақыт"])],
+    [mh(6), lc(0.2), W("15 м/с-ты км/сағ-қа айналдыр (шешуін жаз)", "15 · 3,6 = 54 км/сағ"), mk(2), X("Жылдамдығы тұрақты қозғалыс қалай аталады?", "бірқалыпты", ["бірқалыпсыз", "үдемелі", "тербелмелі"])],
+    // 5-жұп
+    [hm(4), lc(2.5), W("300 см³-ті литрмен жаз (шешуін жаз)", "300 : 1000 = 0,3 л"), km(180), X("v(t) графигінде уақыт осіне параллель түзу нені білдіреді?", "жылдамдық тұрақты", ["дене тыныштықта", "жылдамдық артады", "жол тұрақты"])],
+    [hs(1), cl(3000), W("Неге 1 км/сағ = 1/3,6 м/с? Жазып көрсет", "1 км/сағ = 1000 м : 3600 с = 1/3,6 м/с"), mk(35), X("Екі дене бірдей жол жүрді: біреуі 10 с-та, екіншісі 20 с-та. Қайсысы жылдам?", "10 с-та жүргені", ["20 с-та жүргені", "тең", "анықтау мүмкін емес"])]
+  ];
+}
+function buildPools() {
+  buildSets();
+  const T = [];
+  const addT = (key, q, val, dis, unit) => T.push({ key, q, ...optsFrom(val, dis, unit) });
+  [1, 1.5, 2, 2.5, 3, 0.5, 0.25, 0.75, 4, 1.25].forEach(h => addT("hm" + h, `${fmt(h)} сағ = ? мин`, h * 60, [h * 100, Math.floor(h) * 60 + Math.round((h % 1) * 100), h * 3600, h * 10], "мин"));
+  [2, 3, 4, 5, 10, 15, 20, 30, 45, 1.5].forEach(m => addT("ms" + m, `${fmt(m)} мин = ? с`, m * 60, [m * 100, m * 600, m * 6, m * 3600], "с"));
+  [1, 2, 0.5, 3, 0.25].forEach(h => addT("hs" + h, `${fmt(h)} сағ = ? с`, h * 3600, [h * 60, h * 360, h * 36000, h * 600], "с"));
+  [30, 15, 45, 90, 120, 6, 12].forEach(m => addT("mh" + m, `${m} мин = ? сағ`, m / 60, [m / 100, m / 10, m * 60, m / 30], "сағ"));
+  [1, 2, 0.5, 2.5, 0.25, 3, 1.5, 0.1].forEach(l => addT("lc" + l, `${fmt(l)} л = ? см³`, l * 1000, [l * 100, l * 10, l * 1e6, l * 10000], "см³"));
+  [5, 50, 250, 100].forEach(ml => addT("mlc" + ml, `${ml} мл = ? см³`, ml, [ml * 1000, ml / 1000, ml * 10, ml / 10], "см³"));
+  [500, 2000, 250, 1500, 3000, 100].forEach(c => addT("cl" + c, `${c} см³ = ? л`, c / 1000, [c / 100, c / 10, c * 1000, c / 10000], "л"));
+  [1, 2, 0.5, 3, 0.2].forEach(m => addT("m3" + m, `${fmt(m)} м³ = ? л`, m * 1000, [m * 100, m * 1e6, m * 10, m * 10000], "л"));
+  [18, 36, 54, 72, 90, 108, 3.6, 7.2, 144, 180].forEach(v => addT("km" + v, `${fmt(v)} км/сағ = ? м/с`, v / 3.6, [v * 3.6, v / 60, v / 10, v / 1.8], "м/с"));
+  [5, 10, 15, 20, 25, 30, 1, 2, 40].forEach(v => addT("mk" + v, `${v} м/с = ? км/сағ`, v * 3.6, [v / 3.6, v * 60, v * 10, v * 1.8], "км/сағ"));
+  const F = (key, q, right, wrong) => { const o = shuffle([right, ...wrong]); T.push({ key, q, o, a: o.indexOf(right), txt: 1 }); };
+  F("f1", "Жылдамдық формуласы", "v = s / t", ["v = s · t", "v = t / s", "v = s + t"]);
+  F("f2", "Уақыт формуласы", "t = s / v", ["t = s · v", "t = v / s", "t = v − s"]);
+  F("f3", "Жол формуласы", "s = v · t", ["s = v / t", "s = t / v", "s = v + t"]);
+  F("f4", "ХБЖ-дағы жылдамдық бірлігі", "м/с", ["км/сағ", "км/мин", "см/с"]);
+  F("f5", "ХБЖ-дағы көлем бірлігі", "м³", ["л", "см³", "мл"]);
+  F("f6", "ХБЖ-дағы уақыт бірлігі", "с", ["мин", "сағ", "тәулік"]);
+  F("f7", "Қайсысы жылдам?", "20 м/с", ["54 км/сағ", "тең", "анықтау мүмкін емес"]);
+  F("f8", "Қайсысы жылдам?", "90 км/сағ", ["20 м/с", "тең", "анықтау мүмкін емес"]);
+  tapPool = shuffle(T);
+  writePool = shuffle([
+    { q: "Жылдамдық формуласын жаз", a: "v = s / t" },
+    { q: "Уақыт формуласын жаз", a: "t = s / v" },
+    { q: "Жол формуласын жаз", a: "s = v · t" },
+    { q: "Орташа жылдамдық формуласын жаз", a: "v<sub>орт</sub> = (s<sub>1</sub> + s<sub>2</sub>) / (t<sub>1</sub> + t<sub>2</sub>)" },
+    { q: "1 сағ 30 мин-ды секундқа айналдыр (шешуін жаз)", a: "1 сағ 30 мин = 90 мин = 90 · 60 = 5400 с" },
+    { q: "72 км/сағ-ты м/с-қа айналдыр (шешуін жаз)", a: "72 : 3,6 = 20 м/с" },
+    { q: "2,5 л-ді см³-ке айналдыр", a: "2,5 · 1000 = 2500 см³" },
+    { q: "15 м/с-ты км/сағ-қа айналдыр", a: "15 · 3,6 = 54 км/сағ" },
+    { q: "45 мин-ды сағатпен жаз", a: "45 : 60 = 0,75 сағ" },
+    { q: "Неге 1 км/сағ = 1/3,6 м/с? Жазып көрсет", a: "1 км/сағ = 1000 м : 3600 с = 1/3,6 м/с" },
+    { q: "1 л = ? см³ = ? м³ жаз", a: "1 л = 1000 см³ = 0,001 м³" },
+    { q: "300 см³-ті литрмен жаз", a: "300 : 1000 = 0,3 л" },
+    { q: "2 сағ-ты секундқа айналдыр", a: "2 · 3600 = 7200 с" },
+    { q: "36 км/сағ-ты м/с-қа айналдыр", a: "36 : 3,6 = 10 м/с" }
+  ]);
+}
+function makeSide(k) {
+  const qs = duelSets[pair * 2 + k].slice();
+  return { k, name: roster[pair * 2 + k] || `${pair * 2 + k + 1}-оқушы`, qs, i: 0, score: 0, res: [], phase: "q" };
+}
+function duelReset() { buildPools(); duelLog = []; pair = 0; startPair(); }
+function startPair() {
+  sides = [makeSide(0), makeSide(1)];
+  $("pairLbl").textContent = `${pair + 1}-жұп / ${PAIRS}`;
+  $("duelOver").hidden = true;
+  const d = $("duel"); d.innerHTML = "";
+  sides.forEach(s => { const el = document.createElement("div"); el.className = "side " + (s.k ? "R" : "L"); s.el = el; d.appendChild(el); renderSide(s); });
+}
+function renderSide(s) {
+  const el = s.el, q = s.qs[s.i];
+  const prog = s.qs.map((_, r) => `<i class="${r < s.res.length ? (s.res[r] ? "ok" : "bad") : r === s.i ? "cur" : ""}"></i>`).join("");
+  let h = `<div class="who"><input value="${s.name.replace(/"/g, "&quot;")}" aria-label="оқушы аты"><span class="sc">${s.score}</span></div><div class="prog">${prog}</div>`;
+  if (s.i >= ROUNDS) {
+    h += `<div class="done"><div>Дайын!</div><div class="s">${s.score}/${ROUNDS}</div><div style="font-size:24px;color:var(--muted)">Қарсыласыңды күт</div></div>`;
+  } else if (!q.w) {
+    h += `<div class="kind">${s.i + 1}-сұрақ · таңда</div><div class="q">${q.q}</div><div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${o}</button>`).join("")}</div>`;
+  } else {
+    h += `<div class="kind">${s.i + 1}-сұрақ · жазбаша тапсырма</div><div class="q" style="min-height:70px;font-size:32px">✍ ${q.q}</div>`;
+    if (s.phase === "q") h += `<canvas class="wr" width="740" height="400"></canvas><div class="wbtns"><button class="btn sm" data-a="clr">Өшіру</button><button class="btn pri" data-a="chk">Тексеру</button></div>`;
+    else h += `<canvas class="wr" width="740" height="300"></canvas><div class="ansbox">Дұрыс жауап: <b>${q.a}</b></div><div class="mark-pair"><button class="btn big-ok" data-a="ok" style="border-color:var(--green);color:var(--green)">✔ Дұрыс</button><button class="btn big-ok" data-a="bad" style="border-color:var(--red);color:var(--red)">✘ Қате</button></div>`;
+  }
+  // жазылған суретті сақтау
+  const old = el.querySelector("canvas.wr"); const img = old && s.ink ? s.ink : null;
+  el.innerHTML = h;
+  el.querySelector(".who input").addEventListener("input", e => { s.name = e.target.value; });
+  const cv = el.querySelector("canvas.wr");
+  if (cv) { const ctx = cv.getContext("2d"); if (s.inkImg) ctx.drawImage(s.inkImg, 0, 0, cv.width, cv.height); canvasPen(cv, ctx, () => s.k ? "#b4520e" : "#1d3f8a", 5); s.cv = cv; }
+  el.querySelectorAll(".opt").forEach(b => b.addEventListener("pointerdown", e => { e.preventDefault(); answerTap(s, +b.dataset.j, b); }));
+  el.querySelectorAll("[data-a]").forEach(b => b.addEventListener("pointerdown", e => {
+    e.preventDefault(); const a = b.dataset.a;
+    if (a === "clr") { s.cv.getContext("2d").clearRect(0, 0, s.cv.width, s.cv.height); }
+    if (a === "chk") { const im = new Image(); im.src = s.cv.toDataURL(); s.inkImg = im; s.phase = "check"; im.onload = () => renderSide(s); }
+    if (a === "ok" || a === "bad") finishRound(s, a === "ok");
+  }));
+}
+function answerTap(s, j, btn) {
+  if (s.locked) return; s.locked = true;
+  const q = s.qs[s.i], ok = j === q.a;
+  btn.classList.add(ok ? "ok" : "bad");
+  if (!ok) s.el.querySelectorAll(".opt")[q.a].classList.add("ok");
+  setTimeout(() => finishRound(s, ok), ok ? 700 : 1500);
+}
+function finishRound(s, ok) {
+  s.res.push(ok); if (ok) s.score++;
+  s.i++; s.phase = "q"; s.inkImg = null; s.locked = false;
+  renderSide(s);
+  if (sides.every(x => x.i >= ROUNDS)) setTimeout(pairOver, 700);
+}
+function pairOver() {
+  const [a, b] = sides;
+  duelLog.push({ n: pair + 1, a: [a.name, a.score], b: [b.name, b.score] });
+  const win = a.score === b.score ? "Тең ойын!" : `Жеңімпаз: ${a.score > b.score ? a.name : b.name}`;
+  const last = pair >= PAIRS - 1;
+  let h = `<h3>${win}</h3><div style="font-size:30px">${a.name} <b class="mono" style="color:var(--blue)">${a.score}</b> : <b class="mono" style="color:var(--orange)">${b.score}</b> ${b.name}</div>`;
+  if (last) {
+    const all = duelLog.flatMap(p => [p.a, p.b]).sort((x, y) => y[1] - x[1]);
+    h += `<table><tr><th>Оқушы</th><th>Ұпай</th></tr>${all.map(r => `<tr><td>${r[0]}</td><td class="mono">${r[1]} / ${ROUNDS}</td></tr>`).join("")}</table><button class="btn pri" id="duelAgain">Жаңа ойын</button>`;
+  } else h += `<div style="margin-top:18px"><button class="btn org" id="nextPair">Келесі жұп →</button></div>`;
+  $("duelOver").innerHTML = h; $("duelOver").hidden = false;
+  if (last) $("duelAgain").onclick = duelReset; else $("nextPair").onclick = () => { pair++; startPair(); };
+}
+$("duelNew").onclick = duelReset;
+
+/* ================= деңгейлік тапсырмалар ================= */
+let curStu = roster[0];
+const lvState = store.get("hbj7_levels", {});     // {оқушы: {id: {v, tries, ok}}}
+const MAXP = { A: 4, B: 8, C: 8 };
+function stOf(id) { const s = lvState[curStu] = lvState[curStu] || {}; return s[id] = s[id] || { v: "", tries: 0, ok: false }; }
+function inputCorrect(inp) {
+  const a = inp.dataset.a;
+  if (inp.tagName === "SELECT") return inp.value === a;
+  const tol = inp.dataset.tol ? +inp.dataset.tol : null;
+  return same(num(inp.value), num(a), tol);
+}
+function showAns(inp) { return inp.tagName === "SELECT" ? inp.dataset.a : String(inp.dataset.a).replace(".", ","); }
+function refreshLevels() {
+  document.querySelectorAll(".stuSel").forEach(s => s.value = curStu);
+  document.querySelectorAll(".slide[data-level] .task").forEach(t => {
+    t.querySelectorAll(".ans").forEach(inp => {
+      const st = stOf(inp.dataset.id);
+      inp.value = st.done && !st.ok ? showAns(inp) : st.v;
+      inp.classList.toggle("ok", st.ok); inp.classList.toggle("bad", !!st.done && !st.ok);
+      inp.disabled = !!st.done;
+    });
+    const fb = t.querySelector(".fb"); fb.textContent = ""; fb.className = "fb";
+  });
+  ["A", "B", "C"].forEach(L => { const el = document.querySelector(`[data-pts="${L}"]`); if (el) el.textContent = `${levelPts(curStu, L)} / ${MAXP[L]}`; });
+}
+function levelPts(stu, L) {
+  const s = lvState[stu] || {}; let p = 0;
+  document.querySelectorAll(`.slide[data-level="${L}"] .ans`).forEach(inp => { const st = s[inp.dataset.id]; if (st && st.ok) p += +inp.dataset.p; });
+  return p;
+}
+document.querySelectorAll(".slide[data-level] .task .chk").forEach(btn => btn.onclick = () => {
+  const t = btn.closest(".task"), fb = t.querySelector(".fb"); let msgs = [];
+  t.querySelectorAll(".ans").forEach(inp => {
+    const st = stOf(inp.dataset.id); if (st.done) return;
+    if (inp.value.trim() === "") return;
+    st.v = inp.value; st.tries++;
+    if (inputCorrect(inp)) { st.ok = true; st.done = true; }
+    else if (st.tries >= 2) { st.done = true; msgs.push(`дұрысы: ${showAns(inp)}`); }
+    else msgs.push("қате, тағы 1 мүмкіндік");
+  });
+  store.set("hbj7_levels", lvState);
+  refreshLevels();
+  const all = [...t.querySelectorAll(".ans")].map(i => stOf(i.dataset.id));
+  if (all.every(s => s.ok)) { fb.textContent = "✔ Барлығы дұрыс!"; fb.className = "fb ok"; }
+  else if (msgs.length) { fb.textContent = "✘ " + msgs.join("; "); fb.className = "fb bad"; }
+});
+document.querySelectorAll(".stuSel").forEach(s => s.onchange = () => { curStu = s.value; refreshLevels(); });
+
+/* ================= мензурка ================= */
+(function () {
+  const cv = $("menCv"), ctx = cv.getContext("2d");
+  const GX = 90, GW = 170, YB = 650, YT = 90;          // шкала 0 → max: YB → YT+30
+  let P, level = 0, target = 0, stone = null, raf, phase = 0;
+  function newP() {
+    const opts = [[10, 2], [10, 5], [10, 10], [20, 2], [20, 4], [20, 5], [20, 10], [50, 5], [50, 10]];
+    const [L, n] = pick(opts), c = L / n, max = L * 5;
+    const k1 = rnd(Math.ceil(max * .3 / c), Math.floor(max * .5 / c)), V1 = k1 * c;
+    const kb = rnd(Math.max(2, Math.ceil(max * .12 / c)), Math.floor(max * .3 / c)), Vb = kb * c;
+    P = { L, n, c, max, V1, Vb, V2: V1 + Vb };
+  }
+  const yOf = v => YB - (v / P.max) * (YB - YT - 40);
+  function draw() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    // су
+    const yl = yOf(level);
+    if (level > 0) {
+      ctx.fillStyle = "rgba(74,159,216,.35)"; ctx.fillRect(GX + 4, yl, GW - 8, YB - yl);
+      ctx.strokeStyle = "#2a7fbf"; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(GX + 4, yl - 7); ctx.quadraticCurveTo(GX + GW / 2, yl + 7, GX + GW - 4, yl - 7); ctx.stroke();
+    }
+    // тас
+    if (stone) { ctx.fillStyle = "#6b6f78"; ctx.beginPath(); ctx.ellipse(GX + GW / 2, stone.y, 34, 26, .3, 0, 7); ctx.fill(); ctx.fillStyle = "#8b9099"; ctx.beginPath(); ctx.ellipse(GX + GW / 2 - 8, stone.y - 8, 12, 8, .3, 0, 7); ctx.fill(); }
+    // ағын
+    if (phase === 1) { ctx.fillStyle = "rgba(74,159,216,.7)"; ctx.fillRect(GX + GW / 2 - 6, 20, 12, yl - 20); }
+    // шыны
+    ctx.strokeStyle = "#1d2b45"; ctx.lineWidth = 4;
+    ctx.beginPath(); ctx.moveTo(GX, YT); ctx.lineTo(GX, YB + 10); ctx.quadraticCurveTo(GX, YB + 22, GX + 12, YB + 22); ctx.lineTo(GX + GW - 12, YB + 22); ctx.quadraticCurveTo(GX + GW, YB + 22, GX + GW, YB + 10); ctx.lineTo(GX + GW, YT); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(GX - 50, YB + 22); ctx.lineTo(GX + GW + 50, YB + 22); ctx.lineWidth = 10; ctx.stroke();
+    // шкала
+    ctx.lineWidth = 2; ctx.fillStyle = "#1d2b45"; ctx.font = "bold 22px PT Sans, Arial"; ctx.textBaseline = "middle";
+    for (let k = 0; k * P.c <= P.max + 1e-9; k++) {
+      const v = k * P.c, y = yOf(v), big = Math.abs(v / P.L - Math.round(v / P.L)) < 1e-9;
+      ctx.beginPath(); ctx.moveTo(GX + GW, y); ctx.lineTo(GX + GW - (big ? 46 : 24), y); ctx.stroke();
+      if (big && v > 0) ctx.fillText(String(v), GX + GW + 10, y);
+    }
+    ctx.fillText("мл", GX + GW + 10, YT + 2);
+    // лупа
+    const lx = 470, ly = 250, R = 100;
+    ctx.save(); ctx.beginPath(); ctx.arc(lx, ly, R, 0, 7); ctx.fillStyle = "#fff"; ctx.fill(); ctx.clip();
+    const z = 2.4, cxs = GX + GW - 20, cys = level > 0 ? yl : yOf(P.max / 2);
+    ctx.translate(lx - cxs * z, ly - cys * z); ctx.scale(z, z);
+    if (level > 0) { ctx.fillStyle = "rgba(74,159,216,.35)"; ctx.fillRect(GX + 4, yl, GW - 8, YB - yl); ctx.strokeStyle = "#2a7fbf"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(GX + 4, yl - 7); ctx.quadraticCurveTo(GX + GW / 2, yl + 7, GX + GW - 4, yl - 7); ctx.stroke(); }
+    ctx.strokeStyle = "#1d2b45"; ctx.lineWidth = 1; ctx.font = "bold 11px PT Sans, Arial"; ctx.fillStyle = "#1d2b45";
+    for (let k = 0; k * P.c <= P.max + 1e-9; k++) { const v = k * P.c, y = yOf(v), big = Math.abs(v / P.L - Math.round(v / P.L)) < 1e-9; ctx.beginPath(); ctx.moveTo(GX + GW, y); ctx.lineTo(GX + GW - (big ? 46 : 24), y); ctx.stroke(); if (big && v > 0) ctx.fillText(String(v), GX + GW + 5, y); }
+    ctx.restore();
+    ctx.strokeStyle = "#1d2b45"; ctx.lineWidth = 6; ctx.beginPath(); ctx.arc(lx, ly, R, 0, 7); ctx.stroke();
+    ctx.lineWidth = 14; ctx.beginPath(); ctx.moveTo(lx + R * .7, ly + R * .7); ctx.lineTo(lx + R * 1.25, ly + R * 1.25); ctx.stroke();
+    ctx.fillStyle = "#5f6b7f"; ctx.font = "20px PT Sans, Arial"; ctx.fillText("лупа: менискке қара", lx - 85, ly - R - 20);
+  }
+  let lastT = 0;
+  const loop = ts => {
+    const dt = Math.min(.25, lastT ? (ts - lastT) / 1000 : 1 / 60); lastT = ts;
+    let moving = false;
+    if (Math.abs(level - target) > .02 * P.c) { level += (target - level) * (1 - Math.exp(-dt * 3.2)); moving = true; } else level = target;
+    if (stone && !stone.done) {
+      const yw = yOf(level), yb = YB - 26;
+      stone.vy += 1400 * dt; stone.y += stone.vy * dt * (stone.y > yw ? .3 : 1);
+      if (stone.y > yw && !stone.splash) { stone.splash = true; target = P.V2; }
+      if (stone.y >= yb) { stone.y = yb; stone.done = true; }
+      moving = true;
+    }
+    if (phase === 1 && !moving) { phase = 2; $("menDrop").disabled = false; }
+    if (phase === 3 && stone && stone.done && !moving) { phase = 4; $("mq4").disabled = false; $("mq5").disabled = false; }
+    draw();
+    if (moving) raf = requestAnimationFrame(loop); else lastT = 0;
+  };
+  const run = () => { cancelAnimationFrame(raf); lastT = 0; raf = requestAnimationFrame(loop); };
+  function reset() {
+    newP(); level = 0; target = 0; stone = null; phase = 0;
+    ["mq1", "mq2", "mq3", "mq4", "mq5"].forEach(id => { const i = $(id); i.value = ""; i.className = "ans"; });
+    $("mq4").disabled = $("mq5").disabled = true; $("menDrop").disabled = true; $("menFb").textContent = ""; draw();
+  }
+  $("menPour").onclick = () => { if (phase !== 0) return; phase = 1; target = P.V1; run(); };
+  $("menDrop").onclick = () => { if (phase !== 2) return; phase = 3; stone = { y: 40, vy: 0 }; $("menDrop").disabled = true; run(); };
+  $("menNew").onclick = reset;
+  $("menChk").onclick = () => {
+    const chk = [["mq1", P.c], ["mq2", P.c / 2], ["mq3", P.V1], ["mq4", P.Vb], ["mq5", P.Vb * 1e-6]];
+    let ok = 0, n = 0, tips = [];
+    chk.forEach(([id, v], i) => {
+      const inp = $(id); if (inp.disabled || inp.value.trim() === "") return; n++;
+      const good = same(num(inp.value), v, Math.abs(v) * 1e-3 + 1e-12);
+      inp.className = "ans " + (good ? "ok" : "bad"); if (good) ok++;
+      else tips.push([`бөлік құны = (${P.L} − 0) : ${P.n} = ${fmt(P.c)} мл`, `қателік = ${fmt(P.c)} : 2 = ${fmt(P.c / 2)} мл`, `V₁ = ${fmt(P.V1)} мл`, `V = ${fmt(P.V2)} − ${fmt(P.V1)} = ${fmt(P.Vb)} см³`, `${fmt(P.Vb)} см³ = ${fmt(P.Vb)}·10⁻⁶ м³ = ${fmt(P.Vb * 1e-6, 8)} м³`][i]);
+    });
+    $("menFb").textContent = n ? (tips.length ? "✘ " + tips.join(" · ") : `✔ ${ok} жауап дұрыс!`) : "Алдымен жауап жаз.";
+    $("menFb").className = "fb " + (tips.length ? "bad" : "ok");
+  };
+  const idx = slides.findIndex(s => s.querySelector("#menCv"));
+  hooks[idx] = { enter() { if (!P) reset(); draw(); }, leave() { cancelAnimationFrame(raf); } };
+  newP();
+})();
+
+/* ================= нәтиже ================= */
+function mark(p) { return p >= 18 ? "5" : p >= 14 ? "4" : p >= 9 ? "3" : "2"; }
+function renderResults() {
+  const rows = roster.map(n => { const a = levelPts(n, "A"), b = levelPts(n, "B"), c = levelPts(n, "C"); const d = duelLog.flatMap(p => [p.a, p.b]).find(r => r[0] === n); return { n, a, b, c, t: a + b + c, d: d ? d[1] : "—" }; });
+  $("resT").innerHTML = `<tr><th>Оқушы</th><th>A (4)</th><th>B (8)</th><th>C (8)</th><th>Барлығы</th><th>Баға</th><th>Дуэль</th></tr>` +
+    rows.map(r => `<tr><td>${r.n.replace(/</g, "&lt;")}</td><td>${r.a}</td><td>${r.b}</td><td>${r.c}</td><td><b>${r.t}</b></td><td><b>«${mark(r.t)}»</b></td><td>${r.d}</td></tr>`).join("");
+  return rows;
+}
+const RES = slides.findIndex(s => s.dataset.results);
+hooks[RES] = { enter: renderResults };
+$("keyBtn").onclick = () => { $("keyT").hidden = !$("keyT").hidden; $("keyBtn").textContent = $("keyT").hidden ? "Жауап кілтін көрсету" : "Кілтті жасыру"; };
+$("copyBtn").onclick = () => {
+  const rows = renderResults();
+  const txt = "Оқушы\tA\tB\tC\tБарлығы\tБаға\n" + rows.map(r => `${r.n}\t${r.a}\t${r.b}\t${r.c}\t${r.t}\t${mark(r.t)}`).join("\n");
+  const done = () => $("copyMsg").textContent = "Көшірілді";
+  try { navigator.clipboard.writeText(txt).then(done, () => $("copyMsg").textContent = "Көшіру мүмкін болмады"); } catch (e) { $("copyMsg").textContent = "Көшіру мүмкін болмады"; }
+};
+
+/* ================= бастау ================= */
+fillSelects(); refreshLevels(); duelReset();
+hooks[DUEL] = { enter() { penOn && $("penBtn").click(); } };
+const startAt = parseInt((location.hash || "#1").slice(1), 10);
+slides[0].classList.add("on");
+go(isFinite(startAt) ? startAt - 1 : 0);
+</script>
+</body>
+</html>
